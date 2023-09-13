@@ -1,0 +1,7 @@
+{
+    "flag": "CTF{digitalocean}",
+    "title": "Infrastructure Provider",
+    "description": "The servers behind this CTF all run in the cloud on a single infrastructure provider. Can you determine which provider that is?\n\nNote: Answer should be wrapped in the usual `CTF{x}`, but instead be all lowercase. Only accepted characters are `a-z`, numbers `0-9` and space ` `. E.g. if you think the answer is 'Facebook Inc', the corresponding answer would be `CTF{facebook}`.",
+    "downloadable_files": [],
+    "points": 200
+}

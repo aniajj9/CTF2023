@@ -1,0 +1,12 @@
+{
+   "flag": "CTF{fermat_worked_this_out_400_years_ago}",
+   "title": "Friendly Primes",
+   "description": "Shouldn't be an issue if my primes randomly end up near each other right?",
+   "downloadable_files": [
+      "handout/chal.py",
+      "handout/output.txt"
+   ],
+   "tags": [
+      "RSA"
+   ]
+ }

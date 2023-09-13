@@ -1,0 +1,25 @@
+version: "3.8"
+services:  
+  database:
+    restart: always
+    image: mariadb:10.3
+    environment:
+      - MYSQL_PASSWORD=L-vkPjIRyLW8FKkXPfxquIV0
+      - MYSQL_USER=coffee
+      - MYSQL_DATABASE=coffee
+      - MARIADB_RANDOM_ROOT_PASSWORD=1
+    volumes:
+      - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql
+
+  web:
+    build: .
+    restart: always
+    ports: 
+      - 127.0.0.1:5012:80
+    environment:
+      - FLAG=CTF{H4v3_Y0u_D0N3_7H1S_B3F0R3?}
+      - DB_USER=coffee
+      - DB_PASSWORD=L-vkPjIRyLW8FKkXPfxquIV0
+    volumes:
+      - ./public:/var/www/html:ro
+      - ./shared:/var/www/shared:ro

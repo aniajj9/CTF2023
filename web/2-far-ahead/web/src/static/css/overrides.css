@@ -1,0 +1,49 @@
+.standard-bg {
+    background-image: url('../images/background.webp');
+}
+
+.login100-form-bgbtn {
+    background: #4b9ae7;
+}
+
+.secondary {
+    margin-top: 10px;
+}
+
+.secondary .login100-form-bgbtn {
+    background: #92c9ff;
+}
+
+.secondary .login100-form-btn:hover {
+    color: #fff;
+}
+
+.alert {
+    position: relative;
+    padding: .75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+}
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+/* misc */
+.profile-image {
+    text-align: center;
+}
+
+.profile-image img {
+    max-height: 130px;
+    border-radius: 50%;
+}

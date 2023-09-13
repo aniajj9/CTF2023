@@ -1,0 +1,12 @@
+{
+    "flag": "CTF{is_the_abbreviation_short_for_unreliable_datagram_protocol?}",
+    "title": "unreliable",
+    "description": "Listen carefully, I won't say this 101 times.",
+    "downloadable_files": [
+       "unreliable.pcap.zip"
+    ],
+    "points": 500,
+    "tags": [
+       "pcap"
+    ]
+  }

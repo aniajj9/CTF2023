@@ -1,0 +1,8 @@
+{
+    "flag": "CTF{Let'5_g3t_th0s3_fl4g5!}",
+    "title": "First Flag",
+    "description": "Somewhere on this website is a flag for you. It should not be hard to find. It starts with the string `CTF{` and ends with `}`. This is the same for all flags unless explicitly stated in the corresponding challenge.\n\nEnjoy!",
+    "downloadable_files": [],
+    "tags": [],
+    "score": 25
+}

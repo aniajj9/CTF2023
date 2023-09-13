@@ -1,0 +1,36 @@
+{% import 'base/snippets.html' as snippets %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>2 Far Away</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='fonts/iconic/css/material-design-iconic-font.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/util.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/overrides.css') }}">
+</head>
+<body>
+    <div class="limiter">
+        <div class="container-login100 standard-bg">
+            <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+                <section class="messages">
+                    {% for (message, category) in g.messages %}
+                    <div class="alert alert-{{category}}">{{ message }}</div>
+                    {% endfor %}
+                </section>
+
+                {% block top %}{% endblock %}
+
+                <span class="login100-form-title p-b-49">
+                    {% block title %}{% endblock %}
+                </span>
+                {% block content %}{% endblock %}
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

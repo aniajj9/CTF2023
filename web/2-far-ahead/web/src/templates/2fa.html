@@ -1,0 +1,17 @@
+{% extends "base/base.html" %}
+
+{% block title %}2FA Required{% endblock %}
+{% block content %}
+
+<form action="{{ url_for('enter_2fa') }}" method="post" class="login100-form validate-form" autocomplete="off">
+
+    <div class="wrap-input100 validate-input m-b-23" data-validate="Code is required">
+        <span class="label-input100">Enter 2FA code</span>
+        <input class="input100" type="text" name="code" placeholder="12345678" maxlength="8" autocomplete="off">
+        <span class="focus-input100" data-symbol="&#xf206;"></span>
+    </div>
+
+    {{ snippets.button("Login") }}
+</form>
+
+{% endblock %}

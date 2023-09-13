@@ -1,0 +1,27 @@
+{% extends "base/base.html" %}
+
+{% block title %}Welcome {{ session["user"] }} {% endblock %}
+
+{% block top %}
+<div class="m-b-31 p-b-10 profile-image">
+    <a href="{{ url_for('change_profile_image') }}"><img src="{{ url_for('profile_image') }}" alt="Profile image"></a>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<form action="{{ url_for('logout') }}" method="get" class="login100-form validate-form">
+    <div class="wrap-input100 validate-input m-b-61 p-b-10" data-validate="Username is required">
+        <span class="label-input100">
+            {% if g.user.is_admin %}
+                {{ flag }}
+            {% else %}
+                Only admins can see the flag. We automatically promote users to admins after 10 years - so hang in there!
+            {% endif %}
+        </span>
+    </div>
+
+    {{ snippets.button("Logout") }}
+</form>
+
+{% endblock %}

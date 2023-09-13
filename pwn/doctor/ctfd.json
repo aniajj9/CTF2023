@@ -1,0 +1,10 @@
+{
+  "flag": "CTF{w31c0m3_70_7h3_w0r1d_0f_PWN}",
+  "title": "Doctor",
+  "description": "Have you ever wondered why the doctor makes us say ......",
+  "downloadable_files": [
+     "doctor.zip"
+  ],
+  "tags": ["able a day"],
+  "points": 500
+}

@@ -1,0 +1,7 @@
+version: "3"
+services:
+  webapp:
+    build: .
+    restart: always
+    ports: 
+      - 127.0.0.1:5004:80

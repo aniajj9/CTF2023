@@ -1,0 +1,134 @@
+version: "3"
+services:
+  nginx:
+    image: nginx:alpine
+    restart: always
+    ports: 
+      - 127.0.0.1:12001:1001
+      - 127.0.0.1:12002:1002
+      - 127.0.0.1:12003:1003
+      - 127.0.0.1:12004:1004
+      - 127.0.0.1:12005:1005
+    networks:
+      - network-chal01
+      - network-chal02
+      - network-chal03
+      - network-chal04
+      - network-chal05
+    volumes:
+      - ./nginx:/etc/nginx/conf.d:ro
+      - ./app/src/public/assets:/var/www/html/public/assets:ro
+      - ./app/src/public/robots.txt:/var/www/html/public/index.php:ro
+
+  db:
+    image: mariadb:10.3
+    restart: always
+    networks:
+      - network-chal01
+      - network-chal02
+      - network-chal03
+      - network-chal04
+      - network-chal05
+      - database-only
+    environment:
+      - MARIADB_ROOT_PASSWORD=9132u40i38947y287ro854354
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d/
+
+  # TODO: Give bot the different URI's and accounts, so he can authenticate to the correct instance
+  bot:
+    build: bot
+    restart: always
+    networks:
+     - database-only
+    environment:
+      - DB_HOST=db
+      - DB_USER=bot
+      - DB_PASSWORD=iuh39grbnkosnjboaspjina
+      - DB_NAMES=chal01,chal02,chal03,chal04,chal05
+    volumes:
+      - ./bot/src/:/app:ro
+  
+  chal01:
+    build: app
+    restart: always
+    networks:
+      - network-chal01
+    volumes:
+      - ./app/src/:/var/www/html:ro
+    environment:
+      - DB_HOST=db
+      - DB_USER=chal01
+      - DB_PASSWORD=o1rpu9fjiowfh9p713trohj
+      - DB_NAME=chal01
+
+  chal02:
+    build: app
+    restart: always
+    networks:
+      - network-chal02
+    volumes:
+      - ./customizations/httponly.php:/customizations/httponly.php:ro
+      - ./customizations/use-guid.php:/customizations/use-guid.php:ro
+      - ./app/src/:/var/www/html:ro
+    environment:
+      - DB_HOST=db
+      - DB_USER=chal02
+      - DB_PASSWORD=308rhnsdf791g2bonl12ag5
+      - DB_NAME=chal02
+
+  chal03:
+    build: app
+    restart: always
+    networks:
+      - network-chal03
+    volumes:
+      - ./customizations/httponly.php:/customizations/httponly.php:ro
+      - ./customizations/use-guid.php:/customizations/use-guid.php:ro
+      - ./customizations/firewall-location.php:/customizations/firewall-location.php:ro
+      - ./app/src/:/var/www/html:ro
+    environment:
+      - DB_HOST=db
+      - DB_USER=chal03
+      - DB_PASSWORD=u91473greofkdslm1920keo
+      - DB_NAME=chal03
+
+  chal04:
+    build: app
+    restart: always
+    networks:
+      - network-chal04
+    volumes:
+      - ./customizations/httponly.php:/customizations/httponly.php:ro
+      - ./customizations/use-guid.php:/customizations/use-guid.php:ro
+      - ./customizations/firewall-location.php:/customizations/firewall-location.php:ro
+      - ./app/src/:/var/www/html:ro
+    environment:
+      - DB_HOST=db
+      - DB_USER=chal04
+      - DB_PASSWORD=8041yh3uoenld10g32ep919
+      - DB_NAME=chal04
+
+  chal05:
+    build: app
+    restart: always
+    networks:
+      - network-chal05
+    volumes:
+      - ./customizations/httponly.php:/customizations/httponly.php:ro
+      - ./customizations/use-guid.php:/customizations/use-guid.php:ro
+      - ./customizations/firewall-location.php:/customizations/firewall-location.php:ro
+      - ./app/src/:/var/www/html:ro
+    environment:
+      - DB_HOST=db
+      - DB_USER=chal05
+      - DB_PASSWORD=48fdfp910837grven5d1jh8
+      - DB_NAME=chal05
+
+networks:
+  network-chal01:
+  network-chal02:
+  network-chal03:
+  network-chal04:
+  network-chal05:
+  database-only:

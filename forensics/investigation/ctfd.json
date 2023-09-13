@@ -1,0 +1,10 @@
+{
+    "flag": "CTF{john_goes_brrrrrrrrrrrrrrrrrrrrrrrrrr}",
+    "title": "No more Pokemons",
+    "description": "Well, it seems this word document does not contain any pokemons. Or does it??",
+    "downloadable_files": [
+       "suspicious.docx"
+    ],
+    "points": 300,
+    "tags": []
+  }

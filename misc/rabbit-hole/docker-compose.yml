@@ -1,0 +1,11 @@
+version: '3'
+services:
+ web:
+   image: php:8.2-apache
+   restart: always
+   volumes:
+    - ./public/:/var/www/html:ro
+    - ./private/:/srv/private/:ro
+    - ./rewrite.conf:/etc/apache2/conf-enabled/rewrite.conf:ro
+   ports:
+    - "127.0.0.1:5003:80"

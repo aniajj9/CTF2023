@@ -1,0 +1,12 @@
+{
+    "flag": "CTF{1t_1s_ind33d_4_fl4g_bef0re_U}",
+    "title": "easyhttp",
+    "description": "Find the flag in this packet capture. It's plaintext web traffic.",
+    "downloadable_files": [
+       "easyhttp.pcap.zip"
+    ],
+    "points": 100,
+    "tags": [
+       "pcap"
+    ]
+  }

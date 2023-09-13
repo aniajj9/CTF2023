@@ -1,0 +1,8 @@
+version: "3.8"
+
+services:
+  buffer-intro:
+    restart: always
+    build: .
+    ports:
+      - 127.0.0.1:5008:5000

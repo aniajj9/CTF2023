@@ -1,0 +1,16 @@
+{% extends "base/base.html" %}
+
+{% block title %}Please enroll 2FA{% endblock %}
+{% block content %}
+
+
+<form action="{{ url_for('logout') }}" method="get" class="login100-form validate-form">
+    <div class="wrap-input100 validate-input m-b-61 p-b-10">
+        <span class="label-input100">
+            All administrators are required to enroll with 2FA. Please contact the local security department, to get a physical 2FA device.
+        </span>
+    </div>
+
+    {{ snippets.button("Logout") }}
+</form>
+{% endblock %}

@@ -1,0 +1,8 @@
+version: "3.8"
+
+services:
+  doctor:
+    restart: always
+    build: src/
+    ports:
+      - 1338:1337

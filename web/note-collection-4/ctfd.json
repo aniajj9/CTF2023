@@ -1,0 +1,7 @@
+{
+    "flag": "CTF{g0tt4_10v3_G0o913}",
+    "title": "Note Collection - 4",
+    "description": "We found out how to secure the CSP properly, now it must be secure. Right?",
+    "downloadable_files": [],
+    "tags": ["XSS"]
+}

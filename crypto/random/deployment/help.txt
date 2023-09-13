@@ -1,0 +1,7 @@
+run following commands in the deployment folder
+
+docker build -t random .
+docker run -p 1337:9999 -d --restart always --name random random
+
+then it can be accessed by
+nc 127.0.0.1 1337

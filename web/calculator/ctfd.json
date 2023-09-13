@@ -1,0 +1,9 @@
+{
+    "flag": "CTF{r3g3x's_4r3_br1ll4nt_but_y0u_mu5t_l34rn_th3m_f1r5t}",
+    "title": "Calculator",
+    "description": "We debated around how to make a calculator, which could handle even complex calculations, nested and supported the correct order of execution. We ended up estimating the work to be done in three weeks. Needless to say, the Product Owner was not happy about our proposed timeframe. \n\nWe ended up doing the project in a day using SQL as the calculation engine instead. Initially, we were a bit hesitant, but it seems to work quite well?",
+    "downloadable_files": [
+        "calculator.zip"
+    ],
+    "points": 200
+}

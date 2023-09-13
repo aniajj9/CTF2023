@@ -1,0 +1,13 @@
+{
+  "flag": "CTF{rsa_really_needs_paddingXX}",
+  "title": "Rlly SmAll",
+  "description": "friend just wanted to send me a quick short message. Nothing to see here :)",
+  "downloadable_files": [
+     "handout/chal.py",
+     "handout/output.txt"
+  ],
+  "points": 200,
+  "tags": [
+     "RSA"
+  ]
+}

@@ -1,0 +1,19 @@
+{% extends "base/base.html" %}
+
+{% block title %}Update Profile{% endblock %}
+{% block content %}
+
+<form action="{{ url_for('change_profile_image') }}" method="post" class="login100-form validate-form" autocomplete="off">
+
+    <div class="wrap-input100 validate-input m-b-23" data-validate="Url is reauired">
+        <span class="label-input100">Url for profile image</span>
+        <input class="input100" type="text" name="url" placeholder="https://domain.com/profile.jpg" autocomplete="off">
+        <span class="focus-input100" data-symbol="&#xf206;"></span>
+    </div>
+
+    {{ snippets.button("Save Image") }}
+
+    {{ snippets.linkbutton(url_for("index"), "Back") }}
+</form>
+
+{% endblock %}

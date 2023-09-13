@@ -1,0 +1,13 @@
+{
+   "flag": "CTF{The_math_that_runs_the_internet}",
+   "title": "What is an RSA?",
+   "description": "What do all the numbers mean :psyduck:",
+   "downloadable_files": [
+      "handout/chal.py",
+      "handout/output.txt"
+   ],
+   "points": 100,
+   "tags": [
+      "RSA"
+   ]
+ }

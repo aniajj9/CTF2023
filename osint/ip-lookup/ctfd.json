@@ -1,0 +1,7 @@
+{
+    "flag": "CTF{161.35.16.37}",
+    "title": "IP Lookup",
+    "description": "As we learned, there is a third-party firewall in front of the challenges. So in theory, it should not be possible to determine the origin IP of the servers behind it. Especially not the primary challenge server hosting the largest amount of challenges for this CTF.\n\nQuestion is, what is the secret IP of that server?\n\nNote the flag is the IP, wrapped in CTF{<ip>}.",
+    "downloadable_files": [],
+    "points": 400
+}

@@ -1,0 +1,7 @@
+{
+    "flag": "CTF{cloudflare}",
+    "title": "Firewall",
+    "description": "Can you determine which load-balancing and firewall provider this CTF is using? Both for challenges and this scoring website?\n\nNote: Answer should be wrapped in the usual `CTF{x}`, but instead be all lowercase. Only accepted characters are `a-z`, numbers `0-9` and space ` `. E.g. if you think the answer is 'Facebook Inc', the corresponding answer would be `CTF{facebook}`.",
+    "downloadable_files": [],
+    "points": 100
+}

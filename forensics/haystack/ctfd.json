@@ -1,0 +1,12 @@
+{
+    "flag": "CTF{I_hope_you_automated_that}",
+    "title": "Haystack",
+    "description": "Find the flag in this packet capture. Filter away the false flags.",
+    "downloadable_files": [
+       "haystack.pcap.zip"
+    ],
+    "points": 200,
+    "tags": [
+       "pcap" 
+    ]
+  }

@@ -1,0 +1,12 @@
+﻿{
+    "flag": "CTF{PsyduckIstEinGelbesPokémonDasEinerEnteOderEinemBipedalenSchnabeltierÄhnelt}",
+    "title": "Pokemons In my Word?",
+    "description": "I lost my favorite Pokemon inside a Microsoft Word pokeball. Can you please help get him out?",
+    "downloadable_files": [
+       "Pokeball.docx"
+    ],
+    "points": 200,
+    "tags": [
+       "File Recovery"
+    ]
+  }

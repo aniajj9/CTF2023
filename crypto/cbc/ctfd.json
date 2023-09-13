@@ -1,0 +1,12 @@
+{
+    "flag": "CTF{so_many_modes}",
+    "title": "cookie_crumbling",
+    "description": "I made a new new website where my cookies are NOW VERY protected by REAL CHAINING MILITARY GRADE AES encryption!",
+    "downloadable_files": [
+       "ctfdfiles/app.py"
+    ],
+    "points": 300,
+    "tags": [
+       "crypto"
+    ]
+  }

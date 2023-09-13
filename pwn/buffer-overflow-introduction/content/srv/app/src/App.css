@@ -1,0 +1,90 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  background-color: #222;
+  height: 120px;
+  padding: 20px;
+  color: white;
+}
+
+.input-container {
+}
+
+.buffer-input {
+  padding: 10px;
+  border-radius: 1px;
+  border:none;
+  width: 360px;
+  font-size: 1.5em;
+}
+
+.error {
+  margin: 1em;
+  min-height: 1em;
+  font-size: 1em;
+  color: #ff0000;
+}
+
+
+.block-wrapper {
+  display: flex;
+  justify-content: center;
+  flex-flow: column wrap;
+  align-content: center;
+  align-items: center;
+}
+
+.instructions {
+  float: left;
+  width: 25%;
+  background: #eee;
+  min-height: 702px;
+  height: 100vh;
+}
+
+
+.instructions > * {
+  margin: 1em;
+}
+
+.instructions li {
+  margin: 2em 0;
+  margin-left: 0;
+  padding: 0;
+}
+
+.instructions li.completed {
+  color: green;
+  text-decoration: line-through;
+}
+
+.c-code {
+  float: right;
+  width: 35%;
+  background: #eee;
+  min-height: 702px;
+  height: 100vh;
+}
+
+.c-code > * {
+  margin: 2em;
+}
+
+.hint {
+  margin-top: 15px;
+}
+
+.hint button {
+  display: none;
+}
+
+.hint.hidden button {
+  display: inline-block;
+}
+
+.hint.hidden .text {
+  display: none;
+}

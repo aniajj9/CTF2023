@@ -1,0 +1,9 @@
+{
+    "flag": "CTF{H4rdw4r3_2f4_1S_n0t_3n0ugh!}",
+    "title": "2 Far Ahead",
+    "description": "We found this exclusive website - and we want to be a part of it. Apparently it takes 10 years, but maybe we can somehow shorten that?\n\nIt seems that due to huge amounts of traffic they decided to use the high-performance REDIS database for storing data. Interesting choice indeed!",
+    "downloadable_files": [
+        "web/src/database.py"
+    ],
+    "points": 500
+}

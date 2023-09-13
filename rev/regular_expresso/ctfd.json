@@ -1,0 +1,10 @@
+{
+    "flag": "CTF{u_kn0w_y0ur_regex_i_s33}",
+    "title": "Regular Expresso",
+    "description": "Hello, I would like one regular expresso, please. Thank you.\n\nFree Hint: Maybe you can find a flag, that matches well with this regular expresso?",
+    "downloadable_files": [
+       "public.txt"
+    ],
+    "points": 300,
+    "tags": ["regex"]
+  }

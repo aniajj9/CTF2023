@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  nginx:
+    build: nginx
+    restart: always
+    depends_on:
+      - web
+    ports:
+      - 127.0.0.1:5006:80
+    volumes:
+      - ./web/src/static:/app/static
+  
+  web:
+    build: web
+    restart: always
+    environment:
+      - FLAG=CTF{H4rdw4r3_2f4_1S_n0t_3n0ugh!}
+      - SECRET=4u863gyjepk190ul87g9efonlsdf
+      - WORKERS=1
+      - ADMIN_USERNAME=admin
+      - ADMIN_PASSWORD=43i230u4wondfb863t8rgxz93br6f82hx
+      - PATH_PROFILE_IMAGES=/tmp/
+
+  redis:
+    image: redis:7-alpine

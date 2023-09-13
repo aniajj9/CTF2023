@@ -1,0 +1,11 @@
+{
+  "flag": "CTF{This_causes_so_many_CVEs...}",
+  "title": "Random Tokens",
+  "description": "Here's a super secure password reset system :). Connect using the hostname `random-tokens.wep.dk` and port 1337.",
+  "downloadable_files": [
+     "handout/chal.py"
+  ],
+  "tags": [
+     "random"
+  ]
+}

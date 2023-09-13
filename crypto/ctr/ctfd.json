@@ -1,0 +1,12 @@
+{
+    "flag": "CTF{But_i_used_encryption??}",
+    "title": "cookie_counting",
+    "description": "I made a new website where my cookies are protected by MILITARY GRADE AES encryption!",
+    "downloadable_files": [
+       "ctfdfiles/app.py"
+    ],
+    "points": 300,
+    "tags": [
+       "crypto"
+    ]
+  }

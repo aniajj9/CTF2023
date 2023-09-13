@@ -1,0 +1,17 @@
+
+.block-container {
+  display: flex;
+  max-width: 360px;
+  flex-flow: row wrap;
+}
+
+.block {
+  background-color: #222;
+  width: 70px;
+  height: 70px;
+  line-height: 70px;
+  border-radius: 10px;
+  text-align: center;
+  margin: 10px;
+  color: white;
+}

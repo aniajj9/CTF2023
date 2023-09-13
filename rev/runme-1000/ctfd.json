@@ -1,0 +1,15 @@
+﻿{
+    "flag": "CTF{MISChiefManaged1000}",
+    "title": "Powershell.RunMe.1000",
+    "description": "I've heard that running this a 1000 times will fulfill my deepest desire: Flags, more flags!",
+    "downloadable_files": [
+       "RunMe1000Times.ps1"
+    ],
+    "points": 100,
+    "unique_server_per_team": false,
+    "tags": [
+       "Reversing/MISC",
+       "Easy",
+       "Powershell" 
+    ]
+  }

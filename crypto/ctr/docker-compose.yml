@@ -1,0 +1,7 @@
+version: "3.3"
+services:  
+  web:
+    build: hosting
+    restart: always
+    ports: 
+      - 127.0.0.1:5013:8000

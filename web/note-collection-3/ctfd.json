@@ -1,0 +1,7 @@
+{
+    "flag": "CTF{a_n0t_5o_p0w3rfu11_AI_f1r3wA11}",
+    "title": "Note Collection - 3",
+    "description": "After loosing their precious flags yet another time, the CISO was ready to do something drastic. The site is now protected with two new security features - one being a brand new NextGen© Firewall.",
+    "downloadable_files": [],
+    "tags": ["XSS"]
+}

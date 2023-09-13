@@ -1,0 +1,11 @@
+{
+    "flag": "CTF{k4lm4run10n3n_<3_P5yduck5}",
+    "title": "Psyduck Collection",
+    "description": "How can you not love psyduck!\n\nLuckily I stored all the images in a database so they are safe.\n\nFree hint: Flag seems to be located in another table, I wonder how to find that name?",
+    "downloadable_files": [
+        "index.snippet.php"
+    ],
+    "points": 200,
+    "unique_server_per_team": false,
+    "tags": []
+}

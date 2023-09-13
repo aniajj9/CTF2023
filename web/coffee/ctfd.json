@@ -1,0 +1,8 @@
+{
+    "flag": "CTF{H4v3_Y0u_D0N3_7H1S_B3F0R3?}",
+    "title": "Coffee",
+    "description": "We all know it. It's Monday morning, you just went into the office and you are supposed to work. We all know that is not gonna happen before you get your morning coffee. \n\nThis website contains the most delicious coffee recipe, but apparently others found out as well and password-protected it. Can you get past the login, so you can once again access the delicious coffee recipe?\n\nFree Hint: This is about SQL-injection. The goal of the challenge is to make the SQL query listed on the page, return at least one user.",
+    "downloadable_files": [],
+    "points": 100,
+    "tags": ["intro"]
+}

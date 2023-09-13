@@ -1,0 +1,13 @@
+{
+    "flag": "CTF{That_was_a_lot_of_files_huh_such_is_the_way_of_the_matryoshka_chal!!}",
+    "title": "Name Split",
+    "description": "My friend told me he sent me the flag, but it's just a bunch of zip-files?",
+    "downloadable_files": [
+       "starthere.zip"
+    ],
+    "points": 100,
+    "unique_server_per_team": false,
+    "tags": [
+       "steganography" 
+    ]
+  }

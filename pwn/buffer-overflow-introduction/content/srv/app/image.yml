@@ -1,0 +1,5 @@
+image: simple-overflow
+type: web
+flag_system: "environment"
+options:
+    flag_envvar: "FLAG"

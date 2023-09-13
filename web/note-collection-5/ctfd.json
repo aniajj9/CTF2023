@@ -1,0 +1,7 @@
+{
+    "flag": "CTF{care_to_share_your_solution_with_us?}",
+    "title": "Note Collection - 5",
+    "description": "Can you defeat a more strict policy?",
+    "downloadable_files": [],
+    "tags": ["XSS"]
+}

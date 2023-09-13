@@ -1,0 +1,29 @@
+{%- macro button(text) -%}
+<div class="container-login100-form-btn">
+    <div class="wrap-login100-form-btn">
+        <div class="login100-form-bgbtn"></div>
+        <button class="login100-form-btn">
+            {{ text }}
+        </button>
+    </div>
+</div>
+{%- endmacro %}
+
+{%- macro linkbutton(url, text) -%}
+<div class="container-login100-form-btn secondary">
+    <div class="wrap-login100-form-btn">
+        <div class="login100-form-bgbtn"></div>
+        <a href="{{ url }}" class="login100-form-btn">
+            {{ text }}
+        </a>
+    </div>
+</div>
+{%- endmacro %}
+
+{%- macro captcha(public_key) -%}
+<div class="g-recaptcha m-b-39" data-sitekey="{{ public_key }}"></div>
+{%- endmacro %}
+
+{%- macro captcha_dependencies() -%}
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+{%- endmacro %}
