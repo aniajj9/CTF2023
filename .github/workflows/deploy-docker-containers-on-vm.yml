@@ -13,6 +13,6 @@ jobs:
       with:
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USER }}
-        password: "fdsfds"
+        password: ${{ secrets.SSH_PASSWORD }}
         port: 22
         script: echo "fdwfwdacz"
