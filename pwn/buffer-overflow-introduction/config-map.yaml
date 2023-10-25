@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: buffer-intro-config
+data:
+  LC_ALL: "C.UTF-8"
+  LANG: "C.UTF-8"

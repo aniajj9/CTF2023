@@ -1,0 +1,6 @@
+FROM nginx:alpine
+
+# Copy your Nginx configuration files and assets into the image
+COPY / /etc/nginx/conf.d/
+COPY app/src/public/assets /var/www/html/public/assets/
+COPY app/src/public/robots.txt /var/www/html/public/index.php

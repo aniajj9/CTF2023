@@ -8,4 +8,4 @@ services:
     - ./private/:/srv/private/:ro
     - ./rewrite.conf:/etc/apache2/conf-enabled/rewrite.conf:ro
    ports:
-    - "127.0.0.1:5003:80"
+    - 0.0.0.0:5003:80

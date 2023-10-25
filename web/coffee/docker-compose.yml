@@ -15,7 +15,7 @@ services:
     build: .
     restart: always
     ports: 
-      - 127.0.0.1:5012:80
+      - 0.0.0.0:5012:80
     environment:
       - FLAG=CTF{H4v3_Y0u_D0N3_7H1S_B3F0R3?}
       - DB_USER=coffee

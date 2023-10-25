@@ -1,0 +1,10 @@
+version: '3'
+services:
+ web:
+   build: src
+   restart: always
+   volumes:
+    - ./src/flag.txt:/flag-with-unguessable-name.txt:ro
+    - ./src/config:/etc/webmin/config:ro
+   ports:
+    - "127.0.0.1:10004:10000"

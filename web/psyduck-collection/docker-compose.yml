@@ -5,6 +5,6 @@ services:
     build: .
     restart: always
     ports:
-      - 127.0.0.1:5002:80
+      - 0.0.0.0:5002:80
     environment:
       - flag=CTF{k4lm4run10n3n_<3_P5yduck5}

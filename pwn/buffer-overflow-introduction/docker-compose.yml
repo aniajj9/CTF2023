@@ -1,3 +1,4 @@
+#!/bin/bash
 version: "3.8"
 
 services:
@@ -5,4 +6,4 @@ services:
     restart: always
     build: .
     ports:
-      - 127.0.0.1:5008:5000
+      - 0.0.0.0:5008:5000

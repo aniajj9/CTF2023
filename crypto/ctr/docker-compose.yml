@@ -4,4 +4,4 @@ services:
     build: hosting
     restart: always
     ports: 
-      - 127.0.0.1:5013:8000
+      - 0.0.0.0:5013:8000

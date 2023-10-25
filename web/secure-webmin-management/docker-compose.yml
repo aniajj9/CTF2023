@@ -7,4 +7,4 @@ services:
     - ./src/flag.txt:/flag-with-unguessable-name.txt:ro
     - ./src/config:/etc/webmin/config:ro
    ports:
-    - "127.0.0.1:10000:10000"
+    - "0.0.0.0:10000:10000"

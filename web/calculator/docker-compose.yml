@@ -15,7 +15,7 @@ services:
     image: nginx:alpine
     restart: always
     ports: 
-      - 127.0.0.1:5007:80
+      - 0.0.0.0:5007:80
     volumes:
       - ./frontend:/var/www/html:ro
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
