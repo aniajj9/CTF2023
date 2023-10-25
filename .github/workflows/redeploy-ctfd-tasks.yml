@@ -31,6 +31,31 @@ jobs:
           done
           echo "::set-output name=changed_files::${changed_files_list[@]}"
 
+
+      - name: Filter and format changed files
+        id: filtered-files
+        run: |
+          # Initialize an empty array to store filtered entries
+          filtered_files=()
+      
+          # Loop through each changed file
+          for truncated_path in ${{ steps.list-changed-files.outputs.changed_files }}; do
+            # Exclude entries with .github/workflows and depth-1 entries
+            if [[ "$truncated_path" != ".github/workflows" && "$truncated_path" == */* ]]; then
+              filtered_files+=("$truncated_path")
+            fi
+          done
+      
+          # Format the filtered entries as a comma-separated string
+          formatted_list=$(IFS=,; echo "${filtered_files[*]}")
+      
+          echo "::set-output name=filtered_files::$formatted_list"
+        shell: bash
+      
+      - name: Get formatted files
+        run: echo ${{ steps.filtered-files.outputs.filtered_files }}
+
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -41,8 +66,6 @@ jobs:
 
       - name: Run ctfd.py for each path
         run: |
-          for truncated_path in "${{ steps.list-changed-files.outputs.changed_files }}"; do
-            if [ "$truncated_path" != ".github/workflows" ]; then
-              python ctfd.py "$truncated_path" --token ${{ secrets.CTFD_TOKEN }} --url ${{ secrets.CTFD_URL }}
-            fi
-          done
+            filtered_files="${{ steps.filtered-files.outputs.filtered_files }}"
+            python ctfd.py "./" --directories-to-include $filtered-files --token ${{ secrets.CTFD_TOKEN }} --url ${{ secrets.CTFD_URL }}
+
