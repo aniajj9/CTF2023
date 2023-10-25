@@ -53,6 +53,10 @@ Python script that finds all `docker-compose.yml` files in a directory and build
 ### `ctfd.py`
 
 Python script, modified from [ctfd-cli](https://github.com/eskildsen/ctfd-cli).
+It iterates through the challenges in a directory, and compares them **by name** with the challenges already present in the CTFd instance.
+If challenge is missing, it adds it
+If challenge is present, it updates it
+It also includes a function (commented) to remove a challenge from CTFd instance.
 
 **Parameters:**
 
