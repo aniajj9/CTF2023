@@ -38,5 +38,7 @@ jobs:
       - name: Run ctfd.py for each path
         run: |
           for truncated_path in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            python ctfd.py "$truncated_path" --token ${{ secrets.CTFD_TOKEN }} --url ${{ secrets.CTFD_URL }}
+            if [ "$truncated_path" != ".github/workflows" ]; then
+              python ctfd.py "$truncated_path" --token ${{ secrets.CTFD_TOKEN }} --url ${{ secrets.CTFD_URL }}
+            fi
           done
