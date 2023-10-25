@@ -28,6 +28,6 @@ jobs:
         run: |
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
             # Extract the first two levels of the directory structure
-            truncated_path=$(echo "$file" | cut -d'/' -f-3)
+            truncated_path=$(echo "$file" | cut -d'/' -f-2)
             echo "$truncated_path was changed"
           done
