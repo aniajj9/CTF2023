@@ -1,8 +1,0 @@
-{
-    "flag": "CTF{Maybe_We_Should_Start_Patching_-_Yesterday}",
-    "title": "Secure Management",
-    "description": "After gaining access to the internal network through a SSTI vulnerability, you stumbled upon this internal management system. \n\nIt seems to be well integrated into the enterprise, as it has been running for a very substantial amount of time.\n\nFlag is located at the root of the filesystem.",
-    "downloadable_files": [],
-    "tags": [],
-    "score": 500
-}
