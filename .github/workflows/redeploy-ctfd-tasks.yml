@@ -39,12 +39,6 @@ jobs:
       - name: Install dependencies (if needed)
         run: pip install -r requirements.txt
 
-  run-script:
-    name: Run ctfd.py for each path
-    runs-on: ubuntu-latest
-    needs: changed_files
-
-    steps:
       - name: Run ctfd.py for each path
         run: |
           for truncated_path in "${{ steps.list-changed-files.outputs.changed_files }}"; do
