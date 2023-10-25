@@ -16,6 +16,6 @@ jobs:
         password: ${{ secrets.SSH_PASSWORD }}
         port: 22
         script: |
-          git pull
           cd /home/azureuser/CTF2023/
+          git pull
           python3 docker-compose-recurse.py
