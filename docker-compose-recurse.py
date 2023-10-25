@@ -12,7 +12,7 @@ def find_docker_compose_files(directory):
 
 # Function to run Docker Compose for a given file
 def run_docker_compose(file_path):
-    subprocess.run(['docker-compose', '-f', file_path, 'up', '-d'])
+    subprocess.run(['docker-compose', '-f', file_path, 'up', '-d', '--build'])
 
 def main(root_directory):
     for docker_compose_file in find_docker_compose_files(root_directory):
