@@ -23,4 +23,4 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Search for and run Docker Compose files.")
     parser.add_argument("--path", default=os.getcwd(), help="Root directory to start the search (default: current working directory)")
     args = parser.parse_args()
-    main(args.root_dir)
+    main(args.path)
