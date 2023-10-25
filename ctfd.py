@@ -37,7 +37,7 @@ def parse_arguments():
     parser.add_argument("--prompt-each", action="store_true", help="signal to promp and ask for challenge creation for each individual challenge")
     parser.add_argument("--scoring", type=str, choices=["dynamic", "standard"], help="specify scoring mechanism hereby overwriting individual challenge files")
     parser.add_argument("path", type=str, help="directory to traverse for challenges")
-    parser.add_argument("--directories-to-include", type=str, help="directories of challenges (eg. misc/reversed/) that should be added/updated", default=False)
+    parser.add_argument("--directories-to-include", type=str, help="directories of challenges (eg. misc/reversed/) that should be added/updated", default="")
 
     parsed = parser.parse_args()
 
@@ -46,6 +46,8 @@ def parse_arguments():
         config["integration"]["url"] = parsed.url
         store_config()
 
+    if parsed.directories_to_include == "":
+        parsed.directories_to_include = False
     if parsed.directories_to_include:
         # Split the input string into a list using both commas and spaces as separators
         parsed.directories_to_include = [item.strip() for item in re.split(r'[,\s]+', parsed.directories_to_include)]
