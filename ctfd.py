@@ -5,6 +5,7 @@ import argparse
 from pathlib import Path
 import json
 from codecs import BOM_UTF8
+import re
 
 SETTINGS_FILE = os.path.join(os.path.expanduser('~'), ".ctfd_settings")
 
@@ -31,11 +32,12 @@ def parse_arguments():
     stored_token = config.get("integration", "admin_token")
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--token", type=str, help="the access token for the API access, e.g. d41d8cd98f00b204e9800998ecf8427e", default=stored_token)
+    parser.add_argument("--token", type=str, help="the access token for the API access", default=stored_token)
     parser.add_argument("--url", type=str, help="url to the instance, e.g. https://demo.ctfd.io. Without trailing slash", default=stored_url)
     parser.add_argument("--prompt-each", action="store_true", help="signal to promp and ask for challenge creation for each individual challenge")
     parser.add_argument("--scoring", type=str, choices=["dynamic", "standard"], help="specify scoring mechanism hereby overwriting individual challenge files")
     parser.add_argument("path", type=str, help="directory to traverse for challenges")
+    parser.add_argument("--directories-to-include", type=str, help="directories of challenges (eg. misc/reversed/) that should be added/updated", default=False)
 
     parsed = parser.parse_args()
 
@@ -43,6 +45,10 @@ def parse_arguments():
         config["integration"]["admin_token"] = parsed.token
         config["integration"]["url"] = parsed.url
         store_config()
+
+    if parsed.directories_to_include:
+        # Split the input string into a list using both commas and spaces as separators
+        parsed.directories_to_include = [item.strip() for item in re.split(r'[,\s]+', parsed.directories_to_include)]
 
     return parsed
 
@@ -87,14 +93,23 @@ def get_local_challenges(directory):
         if category in ignore:
             continue
 
+        if settings.directories_to_include: # If specific directories are specified
+            if category not in [element.split('/')[0] for element in settings.directories_to_include]: # Skip if category not in chosen
+                continue
+
         challenge_dirs = next(os.walk(Path(directory, category)))[1]
 
         for dir in challenge_dirs:
+
+            if settings.directories_to_include:  # If specific directories are specified
+                if dir not in [element.split('/')[-1] for element in
+                                    settings.directories_to_include]:  # Skip if category not in chosen
+                    continue
             filename = Path(directory, category, dir, "ctfd.json")
             if not filename.exists():
                 print(f"File "+ str(filename) + " does not exist. Ignoring for now!")
                 continue
-                
+
             with open(filename, "rb") as f:
                 info = json.loads(lstrip_bom(f.read()))
                 info["category"] = category
@@ -220,6 +235,8 @@ if __name__ == "__main__":
 
     print("[+] Local challenges")
     challenges = get_local_challenges(settings.path)
+    for chal in challenges:
+        print(chal["title"])
 
     print("[+] Validating challenges")
     for chal in challenges:
@@ -234,7 +251,7 @@ if __name__ == "__main__":
         if chal["title"] not in existing_challenge_names:
             print("-", chal["title"])
 
-
+    print(settings.directories_to_include)
     #choice = input("Do you want to import the new challenges? (y/N) ").lower().strip()
     #if choice == "y":
     if True:
