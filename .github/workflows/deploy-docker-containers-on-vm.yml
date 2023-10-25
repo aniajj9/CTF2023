@@ -15,4 +15,6 @@ jobs:
         username: ${{ secrets.SSH_USER }}
         password: ${{ secrets.SSH_PASSWORD }}
         port: 22
-        script: echo "fdwfwdacz"
+        script: |
+          cd /home/azureuser/CTF2023/
+          python3 docker-compose-recurse.py
