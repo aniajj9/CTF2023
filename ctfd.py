@@ -235,8 +235,9 @@ if __name__ == "__main__":
             print("-", chal["title"])
 
 
-    choice = input("Do you want to import the new challenges? (y/N) ").lower().strip()
-    if choice == "y":
+    #choice = input("Do you want to import the new challenges? (y/N) ").lower().strip()
+    #if choice == "y":
+    if True:
         print("[+] Creating challenges")
         for chal in challenges:
             if chal["title"] not in existing_challenge_names:
@@ -258,3 +259,4 @@ if __name__ == "__main__":
 
     # TODO: delete a challenge if not exists (if exists in existing challenges and not in challenges, delete)
     # TODO: ID nice reset
+    # TODO: update instead of deleting
