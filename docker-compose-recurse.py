@@ -1,5 +1,6 @@
 import os
 import subprocess
+import argparse
 
 # Function to recursively search for docker-compose.yml files
 def find_docker_compose_files(directory):
@@ -12,9 +13,13 @@ def find_docker_compose_files(directory):
 def run_docker_compose(file_path):
     subprocess.run(['docker-compose', '-f', file_path, 'up', '-d'])
 
-# Specify the root directory to start the search
-root_directory = 'C:\\Users\\bduago\\OneDrive - Bankdata\\Skrivebord\\git\\CTF2023\\'
+def main(root_directory):
+    for docker_compose_file in find_docker_compose_files(root_directory):
+        print(f"Running Docker Compose for: {docker_compose_file}")
+        run_docker_compose(docker_compose_file)
 
-for docker_compose_file in find_docker_compose_files(root_directory):
-    print(f"Running Docker Compose for: {docker_compose_file}")
-    run_docker_compose(docker_compose_file)
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Search for and run Docker Compose files.")
+    parser.add_argument("--path", default=os.getcwd(), help="Root directory to start the search (default: current working directory)")
+    args = parser.parse_args()
+    main(args.root_dir)
