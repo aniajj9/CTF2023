@@ -41,6 +41,7 @@ This repository includes two GitHub workflows triggered by `PUSH` events to the 
    - It notes the directories in the format `/category/task/` (e.g., `/web/coffee/`) where differences are present.
    - If a task is not already part of the CTFd instance, the script adds it.
 
+## Scripts 
 ### `docker-compose-recurse.py`
 
 Python script that finds all `docker-compose.yml` files in a directory and builds them using the "docker-compose up -d --build" command.
