@@ -22,20 +22,5 @@ jobs:
       - name: Install dependencies (if needed)
         run: pip install -r requirements.txt
 
-      - name: Find 2nd level directories
-        id: find-dirs
-        run: |
-          changed_dirs=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | xargs -I % dirname % | sort -u)
-          echo "Changed directories: $changed_dirs" >> changed-dirs.txt
-          echo "::set-output name=dirs::$changed_dirs"
-        
-      - name: Run ctfd.py in changed directories
-        id: run-ctfd
-        run: |
-          changed_dirs=($(cat changed-dirs.txt))
-          for dir in "${changed_dirs[@]}"; do
-            echo "Running ctfd.py in $dir"
-            python ctfd.py "$dir" --token ${{ secrets.CTFD_TOKEN }} --url ${{ secrets.CTFD_URL }}
-          done
-        env:
-          changed-dirs-file: changed-dirs.txt
+      - name: Run ctfd.py
+        run: python ctfd.py ./ --token ${{ secrets.CTFD_TOKEN }} --url ${{ secrets.CTFD_URL }} 
