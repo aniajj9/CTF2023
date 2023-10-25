@@ -1,7 +1,7 @@
 {
     "flag": "CTF{L3t_1t_b3_R41n1Ng_5H33Ls}",
     "title": "Reversed",
-    "description": "Ever wondered how it feels like, when you exploit a service and get a reverse shell back from it? Granting full control?\n\nWell, now's your lucky time! Just pop a reverse shell and you have the flag.\n\nYou need something to receive the connection, so if you need it, [here is a server](https://shell.wep.dk/), just for you. Credentials are `admin:banke-banke-på`. \n\n**Please note:** This is a shared server, so others might be accessing it as well!",
+    "description": "ever wondered how it feels like, when you exploit a service and get a reverse shell back from it? Granting full control?\n\nWell, now's your lucky time! Just pop a reverse shell and you have the flag.\n\nYou need something to receive the connection, so if you need it, [here is a server](https://shell.wep.dk/), just for you. Credentials are `admin:banke-banke-på`. \n\n**Please note:** This is a shared server, so others might be accessing it as well!",
     "downloadable_files": ["reversed.zip"],
     "tags": ["SHELL"],
     "points": 250
