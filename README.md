@@ -12,11 +12,11 @@ Each challenge is required to include a `ctfd.json` file, following the specific
 
 Challenges fall into two categories:
 
-### Tasks Requiring Web Access
+#### Tasks Requiring Web Access
 
 These tasks can be hosted on a CTFd instance.
 
-### Tasks Without Web Access
+#### Tasks Without Web Access
 
 These tasks are also hosted on a CTFd instance but do not require public web access.
 
@@ -40,3 +40,22 @@ This repository includes two GitHub workflows triggered by `PUSH` events to the 
    - The workflow identifies the files that changed between the current push and the previous version of the repository.
    - It notes the directories in the format `/category/task/` (e.g., `/web/coffee/`) where differences are present.
    - If a task is not already part of the CTFd instance, the script adds it.
+
+### `docker-compose-recurse.py`
+
+Python script that finds all `docker-compose.yml` files in a directory and builds them using the "docker-compose up -d --build" command.
+
+**Parameters:**
+
+- `[optional] --path`: Path to the root directory to iterate through. Default: working directory.
+
+### `ctfd.py`
+
+Python script, modified from [ctfd-cli](https://github.com/eskildsen/ctfd-cli).
+
+**Parameters:**
+
+- `--token`: Admin's access token obtained from the CTFd instance's Settings -> Admin token.
+- `--url`: URL to the CTFd instance.
+- `path`: Path to the directory containing challenges.
+- `[optional] --directories-to-include`: Comma and/or space-separated list containing directories of challenges to include in the update (ADD/UPDATE) (`/category/task/` format, e.g., `/web/coffee/`). Tasks in other directories will be skipped. This flag is primarily designed to be used by the GitHub workflow, where the workflow sets it to the list of tasks that were changed with the current push and, therefore, need to be redeployed.
