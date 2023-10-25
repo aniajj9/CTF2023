@@ -193,6 +193,7 @@ def create_challenge(challenge, directory, url, access_token, scoring = None):
         r = session.post(url + f"/api/v1/files", files=files, data=data, headers=auth_headers)
         r.raise_for_status()
 
+
     # Set challenge state
     #if challenge.get("state"):
     #    data = {"state": "hidden"}
@@ -214,6 +215,32 @@ def delete_challenge_by_name(challenges, challenge_name):
         delete_challenge_by_id(challenge_id)
     else:
         raise AttributeError(f"No challenge with name {challenge_name}")
+
+
+def update_challenge(challenge_info, url, access_token):
+    # Get the ID of the existing challenge with the same name
+    existing_challenge = get_challenge_id_by_name(existing_challenges, challenge_info["title"])
+
+    if existing_challenge:
+        # Create auth headers
+        auth_headers = {"Authorization": f"Token {access_token}"}
+
+        # Define the data to update the challenge (modify as needed)
+        data = {
+            "description": challenge_info["description"],
+            "category": challenge_info["category"],
+            # Include other fields to update as needed
+        }
+
+        # Send a PATCH request to update the challenge
+        update_url = f"{url}/api/v1/challenges/{existing_challenge}"
+        r = session.patch(update_url, json=data, headers=auth_headers)
+        r.raise_for_status()
+
+        print(f"Challenge '{challenge_info['title']}' updated successfully.")
+    else:
+        print(f"No existing challenge found with the name '{challenge_info['title']}'.")
+
 
 
 
@@ -268,14 +295,16 @@ if __name__ == "__main__":
                     print("-", chal["title"], "imported")
             elif chal["title"] in existing_challenge_names:
                 if not settings.prompt_each:
-                    delete_challenge_by_name(existing_challenges, chal["title"])
-                    create_challenge(chal, None, settings.url, settings.token, settings.scoring)
+                    update_challenge(chal, settings.url, settings.token)
                     continue
-                if input("Refresh challenge '{}'? (y/N) ".format(chal['title'])).lower() == "y":
-                    delete_challenge_by_name(existing_challenges, chal["title"])
-                    create_challenge(chal, None, settings.url, settings.token, settings.scoring)
+                if input("Update challenge '{}'? (y/N) ".format(chal['title'])).lower() == "y":
+                    update_challenge(chal, settings.url, settings.token)
                     print("-", chal["title"], "refreshed")
 
-    # TODO: delete a challenge if not exists (if exists in existing challenges and not in challenges, delete)
-    # TODO: ID nice reset
-    # TODO: update instead of deleting
+        for existing_challenge_name in existing_challenge_names:
+            if existing_challenge_name not in [chal["title"] for chal in challenges]:
+                if not settings.prompt_each:
+                    delete_challenge_by_name(existing_challenges, existing_challenge_name)
+                    continue
+                if input("Remove challenge '{}'? (y/N) ".format(chal['title'])).lower() == "y":
+                    delete_challenge_by_name(existing_challenges, existing_challenge_name)
