@@ -33,8 +33,13 @@ This repository includes two GitHub workflows triggered by `PUSH` events to the 
    - It fetches the current GitHub repository onto the VM.
    - The VM executes the `docker-compose-recurse.py` script, which scans the repository's files. When a `docker-compose.yml` file is found, the script uses Docker to build a container.
    - This workflow is activated by any `PUSH` to the `MAIN` branch, ensuring that all containers on the VM are redeployed with each push.
+  
+   Assumptions:
+   a. There are no conflicts while performing `git pull` on the virtual machine
+   b. If there are new tasks added, or the ports for already existing ones change, the ports are open on the networking section of Azure VM in Azure (manually add them)
+   
 
-2. **redeploy-ctfd-tasks.yml**:
+3. **redeploy-ctfd-tasks.yml**:
    - This workflow runs the `ctfd.py` script, which is a modified version of the original script created by [ctfd-cli](https://github.com/eskildsen/ctfd-cli).
    - It triggers on any `PUSH` event to the `MAIN` branch.
    - The workflow identifies the files that changed between the current push and the previous version of the repository.
