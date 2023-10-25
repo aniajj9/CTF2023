@@ -1,7 +1,7 @@
 {
     "flag": "CTF{Ju5t_K33p_'3m_C0mm1NG}",
     "title": "Revenge of the Reversed",
-    "description": "Y0u already know the drill. It seems they added some <i>input validation</i>, but a hacker like you, should easily be able to circumvent.",
+    "description": "you already know the drill. It seems they added some <i>input validation</i>, but a hacker like you, should easily be able to circumvent.",
     "downloadable_files": ["revenge.zip"],
     "tags": ["SHELL"],
     "points": 500

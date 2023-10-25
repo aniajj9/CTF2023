@@ -37,7 +37,7 @@ def parse_arguments():
     parser.add_argument("--prompt-each", action="store_true", help="signal to promp and ask for challenge creation for each individual challenge")
     parser.add_argument("--scoring", type=str, choices=["dynamic", "standard"], help="specify scoring mechanism hereby overwriting individual challenge files")
     parser.add_argument("path", type=str, help="directory to traverse for challenges")
-    parser.add_argument("--directories-to-include", type=str, help="directories of challenges (eg. misc/reversed/) that should be added/updated", default="")
+    parser.add_argument("--directories-to-include", type=str, help="directories of challenges (eg. misc/reversed/) that should be added/updated", default=False)
 
     parsed = parser.parse_args()
 
