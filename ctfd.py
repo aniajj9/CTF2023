@@ -301,10 +301,12 @@ if __name__ == "__main__":
                     update_challenge(chal, settings.url, settings.token)
                     print("-", chal["title"], "refreshed")
 
+        '''
+        # DELETE CHALLENGE
         for existing_challenge_name in existing_challenge_names:
             if existing_challenge_name not in [chal["title"] for chal in challenges]:
                 if not settings.prompt_each:
                     delete_challenge_by_name(existing_challenges, existing_challenge_name)
                     continue
                 if input("Remove challenge '{}'? (y/N) ".format(chal['title'])).lower() == "y":
-                    delete_challenge_by_name(existing_challenges, existing_challenge_name)
+                    delete_challenge_by_name(existing_challenges, existing_challenge_name)'''
