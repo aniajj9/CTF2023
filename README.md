@@ -74,5 +74,3 @@ It also includes a function (commented) to remove a challenge from CTFd instance
 - `path`: Path to the directory containing challenges.
 - `[optional] --directories-to-include`: Comma and/or space-separated string containing directories of challenges to include in the update (ADD/UPDATE) (`category/task` format, e.g., `web/coffee` - include only one / !). Tasks in other directories will be skipped. This flag is primarily designed to be used by the GitHub workflow, where the workflow sets it to the list of tasks that were changed with the current push and, therefore, need to be redeployed.
 
-
-
