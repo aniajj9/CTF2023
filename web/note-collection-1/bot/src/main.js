@@ -40,11 +40,11 @@ const getPassword = (chal) => {
 
 const getUrl = (chal) => {
     return {
-        'chal01': 'https://note-collection-1.wep.dk',
-        'chal02': 'https://note-collection-2.wep.dk',
-        'chal03': 'https://note-collection-3.wep.dk',
-        'chal04': 'https://note-collection-4.wep.dk',
-        'chal05': 'https://note-collection-5.wep.dk'
+        'chal01': 'http://20.123.50.13:12001',
+        'chal02': 'http://20.123.50.13:12002',
+        'chal03': 'http://20.123.50.13:12003',
+        'chal04': 'http://20.123.50.13:12004',
+        'chal05': 'http://20.123.50.13:12005'
     }[chal]
 }
 

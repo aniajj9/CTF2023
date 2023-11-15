@@ -225,12 +225,28 @@ def update_challenge(challenge_info, url, access_token):
         # Create auth headers
         auth_headers = {"Authorization": f"Token {access_token}"}
 
-        # Define the data to update the challenge (modify as needed)
         data = {
-            "description": challenge_info["description"],
+            "name": challenge_info["title"],
             "category": challenge_info["category"],
-            # Include other fields to update as needed
+            "description": challenge_info["description"],
+            "type": challenge_info.get("type", "dynamic"),
+            "value": challenge_info.get("points", 0),
+            "state": "hidden",
+            "initial": 500,
+            "decay": 15,
+            "minimum": 100,
         }
+
+        if challenge_info.get("type") in ["dynamic", "standard"]:
+            data["type"] = challenge_info["type"]
+
+        if data["type"] == "standard":
+            del data["initial"], data["decay"], data["minimum"]
+        elif data["type"] == "dynamic":
+            del data["value"]
+
+        if challenge_info.get("connection_info"):
+            data["connection_info"] = challenge_info["connection_info"]
 
         # Send a PATCH request to update the challenge
         update_url = f"{url}/api/v1/challenges/{existing_challenge}"
@@ -238,8 +254,26 @@ def update_challenge(challenge_info, url, access_token):
         r.raise_for_status()
 
         print(f"Challenge '{challenge_info['title']}' updated successfully.")
+
+        # Update downloadable files if provided
+        if challenge_info.get("downloadable_files") and challenge_info.get("directory"):
+            files = []
+            for f in challenge_info["downloadable_files"]:
+                file_path = Path(challenge_info["directory"], f)
+                if file_path.exists():
+                    file_object = ("file", file_path.open(mode="rb"))
+                    files.append(file_object)
+                else:
+                    print(f"File {file_path} was not found", fg="red")
+                    raise Exception(f"File {file_path} was not found")
+
+            data = {"challenge_id": existing_challenge, "type": "challenge"}
+
+            r = session.post(url + f"/api/v1/files", files=files, data=data, headers=auth_headers)
+            r.raise_for_status()
     else:
         print(f"No existing challenge found with the name '{challenge_info['title']}'.")
+Z
 
 
 
