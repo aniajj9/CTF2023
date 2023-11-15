@@ -27,6 +27,9 @@ def store_config():
     with open(SETTINGS_FILE, "w+") as f:
         config.write(f)
 
+'''
+ Parse the command line arguments
+'''
 def parse_arguments():
     stored_url = config.get("integration", "url")
     stored_token = config.get("integration", "admin_token")
@@ -51,10 +54,10 @@ def parse_arguments():
     if parsed.directories_to_include:
         # Split the input string into a list using both commas and spaces as separators
         parsed.directories_to_include = [item.strip() for item in re.split(r'[,\s]+', parsed.directories_to_include)]
-
+        
     return parsed
 
-
+# Make sure the info is correct
 def validate_challenge_info(challenge):
     valid = True
     keys = ["title","description","flag"]
@@ -85,6 +88,7 @@ def validate_challenge_info(challenge):
                 valid = False
 
     return valid
+
 
 def get_local_challenges(directory):
     dirs = next(os.walk(directory))[1]
@@ -129,6 +133,26 @@ def get_challenge_id_by_name(challenges, challenge_name):
         if challenge["name"] == challenge_name:
             return challenge["id"]
     return None
+
+def get_challenge_by_id(challenge_id, session, url, auth_headers):
+    # Make a GET request to retrieve details for the specified challenge
+    challenge_url = f"{url}/api/v1/challenges/{challenge_id}"
+    response = session.get(challenge_url, headers=auth_headers)
+
+    # Check for errors
+    response.raise_for_status()
+
+    # Parse the response JSON
+    data = response.json()
+
+    # Check if the response indicates success
+    if data.get("success") and data.get("data"):
+        # Return the details of the challenge
+        return data["data"]
+
+    # If no data is found, return None or raise an exception, depending on your needs
+    return None
+
 
 def create_challenge(challenge, directory, url, access_token, scoring = None):
     auth_headers = {"Authorization": f"Token {access_token}"}
@@ -309,17 +333,18 @@ def update_challenge(challenge_info, url, access_token):
     if existing_challenge:
         # Create auth headers
         auth_headers = {"Authorization": f"Token {access_token}"}
+        existing_challenge_details = get_challenge_by_id(existing_challenge, session, url, auth_headers)
 
         data = {
             "name": challenge_info["title"],
             "category": challenge_info["category"],
             "description": challenge_info["description"],
-            "type": challenge_info.get("type", "dynamic"),
-            "value": challenge_info.get("points", 0),
-            "state": "hidden",
-            "initial": 500,
-            "decay": 15,
-            "minimum": 100,
+            "type": challenge_info.get("type", existing_challenge_details["type"]),
+            "value": challenge_info.get("points", existing_challenge_details["value"]),
+            "state": challenge_info.get("state", existing_challenge_details["state"]),
+            "initial": challenge_info.get("initial", existing_challenge_details["initial"]),
+            "decay": challenge_info.get("decay", existing_challenge_details["decay"]),
+            "minimum": challenge_info.get("minimum", existing_challenge_details["minimum"]),
         }
 
         if challenge_info.get("type") in ["dynamic", "standard"]:
