@@ -3,5 +3,5 @@
     "title": "Note Collection - 1",
     "description": "?You stumbled upon this nice looking website. Surely, if it looks *that* good, it should be safe to assume it also contains a delicious flag or two!\n\nYour challenge is to \n1) find a [**cross-site scripting**](https://portswigger.net/web-security/cross-site-scripting/stored) (XSS) vulnerability on the website below.\n2) put in a Javascript payload, that enables reading the admin's cookie or page contents\n3) Exfiltrate this information to a [server of your liking](https://webhook.site) or [maybe this](https://requestcatcher.com/). \n4) After obtaining the admin's cookie, open a new inkognito browser window and edit your cookie to match the admin's. Reload the page \n5) Enjoy the flag!",
     "downloadable_files": ["docker-compose.yml"],
-    "tags": ["xsss"]
+    "tags": ["xssss"]
 }
