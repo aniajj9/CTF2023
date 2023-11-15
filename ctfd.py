@@ -264,12 +264,15 @@ def update_challenge(challenge_info, url, access_token):
         if challenge_info.get("tags"):
             for tag in challenge_info["tags"]:
                 r = session.patch(
-                    f"{url}/api/v1/flags/{existing_challenge}", json={"challenge_id": existing_challenge, "value": tag},
+                    f"{url}/api/v1/tags/{existing_challenge}", json={"challenge_id": existing_challenge, "value": tag},
                     headers=auth_headers
                 )
                 r.raise_for_status()
 
         # Update downloadable files if provided
+        print("FILES ---")
+        print(challenge_info.get("downloadable_files"))
+        print(challenge_info.get("directory"))
         if challenge_info.get("downloadable_files") and challenge_info.get("directory"):
             files = []
             for f in challenge_info["downloadable_files"]:
@@ -282,7 +285,7 @@ def update_challenge(challenge_info, url, access_token):
                     raise Exception(f"File {file_path} was not found")
 
             file_data = {"challenge_id": existing_challenge, "type": "challenge"}
-            r = session.patch(f"{url}/api/v1/flags/{existing_challenge}", files=files, data=file_data, headers=auth_headers)
+            r = session.patch(f"{url}/api/v1/files/{existing_challenge}", files=files, data=file_data, headers=auth_headers)
             r.raise_for_status()
 
         print(f"Challenge '{challenge_info['title']}' updated successfully.")
