@@ -258,6 +258,47 @@ def get_tag_id_by_challenge_id(challenge_id, session, url, auth_headers):
     return None
 
 
+def get_files_by_challenge_id(challenge_id, session, url, auth_headers):
+    # Make a GET request to retrieve files for the specified challenge
+    files_url = f"{url}/api/v1/challenges/{challenge_id}/files"
+    response = session.get(files_url, headers=auth_headers)
+
+    # Check for errors
+    response.raise_for_status()
+
+    # Parse the response JSON
+    data = response.json()
+
+    # Check if the response indicates success
+    if data.get("success") and data.get("data"):
+        # Return the list of files
+        return data["data"]
+
+    # If no files are found, return an empty list or raise an exception, depending on your needs
+    return []
+
+def delete_file_by_id(file_id, session, url, auth_headers):
+    # Make a DELETE request to delete the specified file
+    file_url = f"{url}/api/v1/files/{file_id}"
+    response = session.delete(file_url, headers=auth_headers)
+
+    # Check for errors
+    response.raise_for_status()
+
+    print(f"File with ID {file_id} deleted successfully.")
+
+def delete_files_by_challenge_id(challenge_id, session, url, auth_headers):
+    # Get the list of files associated with the challenge
+    files = get_files_by_challenge_id(challenge_id, session, url, auth_headers)
+
+    # Delete each file
+    for file_info in files:
+        file_id = file_info.get("id")
+        if file_id:
+            delete_file_by_id(file_id, session, url, auth_headers)
+
+
+
 def update_challenge(challenge_info, url, access_token):
     # Get the ID of the existing challenge with the same name
     existing_challenge = get_challenge_id_by_name(existing_challenges, challenge_info["title"])
@@ -325,6 +366,10 @@ def update_challenge(challenge_info, url, access_token):
         print(challenge_info.get("downloadable_files"))
         print(challenge_info.get("directory"))
         if challenge_info.get("downloadable_files") and challenge_info.get("directory"):
+            # Delete existing files for the challenge
+            delete_files_by_challenge_id(existing_challenge, session, url, auth_headers)
+
+            # Upload new files for the challenge
             files = []
             for f in challenge_info["downloadable_files"]:
                 file_path = Path(challenge_info["directory"], f)
@@ -336,9 +381,8 @@ def update_challenge(challenge_info, url, access_token):
                     raise Exception(f"File {file_path} was not found")
 
             file_data = {"challenge_id": existing_challenge, "type": "challenge"}
-            r = session.patch(f"{url}/api/v1/files/{existing_challenge}", files=files, data=file_data, headers=auth_headers)
+            r = session.post(f"{url}/api/v1/files", files=files, data=file_data, headers=auth_headers)
             r.raise_for_status()
-
         print(f"Challenge '{challenge_info['title']}' updated successfully.")
     else:
         print(f"No existing challenge found with the name '{challenge_info['title']}'.")
