@@ -138,22 +138,14 @@ def get_challenge_by_id(challenge_id, session, url, auth_headers):
         # Make a GET request to retrieve details for the specified challenge
         challenge_url = f"{url}/api/v1/challenges/{challenge_id}"
 
-        try:
-            response = session.get(challenge_url, headers=auth_headers)
-            response.raise_for_status()
-            data = response.json()
 
-            # Check if the response indicates success
-            if data.get("success") and data.get("data"):
-                # Return the details of the challenge
-                return data["data"]
-
-        except requests.exceptions.HTTPError as http_err:
-            print(f"HTTP error occurred: {http_err}")
-        except requests.exceptions.RequestException as req_err:
-            print(f"Request error occurred: {req_err}")
-        except json.decoder.JSONDecodeError as json_err:
-            print(f"JSON decoding error occurred: {json_err}")
+        response = session.get(challenge_url, headers=auth_headers)
+        response.raise_for_status()
+        data = response.json()
+        # Check if the response indicates success
+        if data.get("success") and data.get("data"):
+            # Return the details of the challenge
+            return data["data"]
 
         # If an error occurs or the structure is not as expected, return None or raise an exception
         return None
