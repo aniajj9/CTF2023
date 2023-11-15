@@ -216,6 +216,27 @@ def delete_challenge_by_name(challenges, challenge_name):
     else:
         raise AttributeError(f"No challenge with name {challenge_name}")
 
+def get_flags_by_challenge_id(url, challenge_id, auth_headers):
+    # Make an API request to get flags by challenge ID
+    flags_api_url = f"{url}/api/v1/challenges/{challenge_id}/flags"
+    response = session.get(flags_api_url, headers=auth_headers)
+    response.raise_for_status()
+    return response.json()["data"]
+
+def get_tags_by_challenge_id(url, challenge_id, auth_headers):
+    # Make an API request to get tags by challenge ID
+    tags_api_url = f"{url}/api/v1/challenges/{challenge_id}/tags"
+    response = session.get(tags_api_url, headers=auth_headers)
+    response.raise_for_status()
+    return response.json()["data"]
+
+def get_files_by_challenge_id(url, challenge_id, auth_headers):
+    # Make an API request to get files by challenge ID
+    files_api_url = f"{url}/api/v1/challenges/{challenge_id}/files"
+    response = session.get(files_api_url, headers=auth_headers)
+    response.raise_for_status()
+    return response.json()["data"]
+
 
 def update_challenge(challenge_info, url, access_token):
     # Get the ID of the existing challenge with the same name
@@ -256,21 +277,21 @@ def update_challenge(challenge_info, url, access_token):
         print(f"Challenge '{challenge_info['title']}' updated successfully.")
 
         # Remove existing flags
-        existing_flags = get_flags_by_challenge_id(existing_challenge)
+        existing_flags = get_flags_by_challenge_id(url, existing_challenge, auth_headers)
         for flag_id in existing_flags:
             flag_url = f"{url}/api/v1/flags/{flag_id}"
             r = session.delete(flag_url, headers=auth_headers)
             r.raise_for_status()
 
         # Remove existing tags
-        existing_tags = get_tags_by_challenge_id(existing_challenge)
+        existing_tags = get_tags_by_challenge_id(url, existing_challenge, auth_headers)
         for tag_id in existing_tags:
             tag_url = f"{url}/api/v1/tags/{tag_id}"
             r = session.delete(tag_url, headers=auth_headers)
             r.raise_for_status()
 
         # Remove existing downloadable files
-        existing_files = get_files_by_challenge_id(existing_challenge)
+        existing_files = get_files_by_challenge_id(url, existing_challenge, auth_headers)
         for file_id in existing_files:
             file_url = f"{url}/api/v1/files/{file_id}"
             r = session.delete(file_url, headers=auth_headers)
