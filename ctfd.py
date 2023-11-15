@@ -135,22 +135,19 @@ def get_challenge_id_by_name(challenges, challenge_name):
     return None
 
 def get_challenge_by_id(challenge_id, session, url, auth_headers):
-        # Make a GET request to retrieve details for the specified challenge
-        challenge_url = f"{url}/api/v1/challenges/{challenge_id}"
+    # Make a GET request to retrieve details for the specified challenge
+    challenge_url = f"{url}/api/v1/challenges/{challenge_id}"
 
+    response = session.get(challenge_url, headers=auth_headers)
+    response.raise_for_status()
+    data = response.json()
+    # Check if the response indicates success
+    if data.get("success") and data.get("data"):
+        # Return the details of the challenge
+        return data["data"]
 
-        response = session.get(challenge_url, headers=auth_headers)
-        response.raise_for_status()
-        print(challenge_url)
-        print(response.content)
-        data = response.content.json()
-        # Check if the response indicates success
-        if data.get("success") and data.get("data"):
-            # Return the details of the challenge
-            return data["data"]
-
-        # If an error occurs or the structure is not as expected, return None or raise an exception
-        return None
+    # If an error occurs or the structure is not as expected, return None or raise an exception
+    return None
 
 
 def create_challenge(challenge, directory, url, access_token, scoring = None):
