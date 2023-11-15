@@ -3,5 +3,6 @@
     "title": "Note Collection - 2",
     "description": "You caused quite a disturbance by stealing the flag from the note collection. Thus, you heard rumours about the administrators updating the security of the website, implementing more modern security features to protect those cookies. \n\nCan you still exploit the XSS vulnerability and steal the flag?\n\nFree Hint: Try to determine the changes - Try to determine the changes - good places to start are cookies and response headers.",
     "downloadable_files": [],
-    "tags": ["XSS"]
+    "tags": ["XSS"],
+    "connection_info": "http://20.123.50.13:12002"
 }
