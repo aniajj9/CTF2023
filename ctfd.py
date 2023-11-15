@@ -282,7 +282,7 @@ def update_challenge(challenge_info, url, access_token):
         if challenge_info.get("flag"):
             flag_data = {"content": challenge_info["flag"], "type": "static", "challenge_id": existing_challenge}
             print(f"{url}/api/v1/challenges/{existing_challenge}/flags")
-            r = session.patch(f"{update_url}/flags", json=flag_data, headers=auth_headers)
+            r = session.patch(f"{url}/api/v1/flags/{existing_challenge}", json=flag_data, headers=auth_headers)
             r.raise_for_status()
 
         # Update tags if provided
