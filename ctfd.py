@@ -247,15 +247,15 @@ def get_tag_id_by_challenge_id(challenge_id, session, url, auth_headers):
 
     # Parse the response JSON
     data = response.json()
-
+    tags = []
     # Check if the response indicates success
     if data.get("success") and data.get("data"):
         # Find the first flag entry and return its ID
         for tag_entry in data["data"]:
-            return tag_entry.get("id")
+            tags.append(tag_entry.get("id"))
 
     # If no flags are found, return None or raise an exception, depending on your needs
-    return None
+    return tags
 
 
 
@@ -352,13 +352,14 @@ def update_challenge(challenge_info, url, access_token):
             print(f"No existing flag found for challenge '{challenge_info['title']}'.")
 
         # Delete existing tags for the challenge
-        existing_tag_id = get_tag_id_by_challenge_id(existing_challenge, session, url, auth_headers)
-        if existing_tag_id is not None:
-            # The existing_tag_id can now be used to delete the tags
-            tag_url = f"{url}/api/v1/tags/{existing_tag_id}"
-            r = session.delete(tag_url, headers=auth_headers)
-            r.raise_for_status()
-            print(f"Tags for challenge '{challenge_info['title']}' deleted successfully.")
+        existing_tag_ids = get_tag_id_by_challenge_id(existing_challenge, session, url, auth_headers)
+        if len(existing_tag_ids) > 0:
+            for existing_tag_id in existing_tag_ids:
+                # The existing_tag_id can now be used to delete the tags
+                tag_url = f"{url}/api/v1/tags/{existing_tag_id}"
+                r = session.delete(tag_url, headers=auth_headers)
+                r.raise_for_status()
+                print(f"Tags for challenge '{challenge_info['title']}' deleted successfully.")
         else:
             print(f"No existing tags found for challenge '{challenge_info['title']}'.")
         # Create new tags for the challenge
