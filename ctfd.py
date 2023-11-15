@@ -255,6 +255,21 @@ def update_challenge(challenge_info, url, access_token):
 
         print(f"Challenge '{challenge_info['title']}' updated successfully.")
 
+        # Update flags if provided
+        if challenge_info.get("flag"):
+            flag_data = {"content": challenge_info["flag"], "type": "static", "challenge_id": existing_challenge}
+            r = session.post(url + f"/api/v1/flags", json=flag_data, headers=auth_headers)
+            r.raise_for_status()
+
+        # Update tags if provided
+        if challenge_info.get("tags"):
+            for tag in challenge_info["tags"]:
+                r = session.post(
+                    url + f"/api/v1/tags", json={"challenge_id": existing_challenge, "value": tag},
+                    headers=auth_headers
+                )
+                r.raise_for_status()
+
         # Update downloadable files if provided
         if challenge_info.get("downloadable_files") and challenge_info.get("directory"):
             files = []
@@ -267,9 +282,8 @@ def update_challenge(challenge_info, url, access_token):
                     print(f"File {file_path} was not found", fg="red")
                     raise Exception(f"File {file_path} was not found")
 
-            data = {"challenge_id": existing_challenge, "type": "challenge"}
-
-            r = session.post(url + f"/api/v1/files", files=files, data=data, headers=auth_headers)
+            file_data = {"challenge_id": existing_challenge, "type": "challenge"}
+            r = session.post(url + f"/api/v1/files", files=files, data=file_data, headers=auth_headers)
             r.raise_for_status()
     else:
         print(f"No existing challenge found with the name '{challenge_info['title']}'.")
