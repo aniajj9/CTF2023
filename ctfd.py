@@ -134,7 +134,7 @@ def get_challenge_id_by_name(challenges, challenge_name):
             return challenge["id"]
     return None
 
-    def get_challenge_by_id(challenge_id, session, url, auth_headers):
+def get_challenge_by_id(challenge_id, session, url, auth_headers):
         # Make a GET request to retrieve details for the specified challenge
         challenge_url = f"{url}/api/v1/challenges/{challenge_id}"
 
