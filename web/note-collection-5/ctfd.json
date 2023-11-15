@@ -3,5 +3,6 @@
     "title": "Note Collection - 5",
     "description": "Can you defeat a more strict policy?",
     "downloadable_files": [],
-    "tags": ["XSS"]
+    "tags": ["XSS"],
+    "connection_info": "http://20.123.50.13:12005"
 }

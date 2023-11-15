@@ -3,5 +3,6 @@
     "title": "Note Collection - 4",
     "description": "We found out how to secure the CSP properly, now it must be secure. Right?",
     "downloadable_files": [],
-    "tags": ["XSS"]
+    "tags": ["XSS"],
+    "connection_info": "http://20.123.50.13:12004"
 }

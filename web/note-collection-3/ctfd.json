@@ -3,5 +3,6 @@
     "title": "Note Collection - 3",
     "description": "After loosing their precious flags yet another time, the CISO was ready to do something drastic. The site is now protected with two new security features - one being a brand new NextGen© Firewall.",
     "downloadable_files": [],
-    "tags": ["XSS"]
+    "tags": ["XSS"],
+    "connection_info": "http://20.123.50.13:12003"
 }
