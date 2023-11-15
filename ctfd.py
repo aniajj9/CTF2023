@@ -340,7 +340,7 @@ def update_challenge(challenge_info, url, access_token):
         
         }
 
-        if challenge_info.get("type") in ["dynamic", "standard"]:
+        '''if challenge_info.get("type") in ["dynamic", "standard"]:
             data["type"] = challenge_info["type"]
 
         if data["type"] == "standard":
@@ -355,7 +355,7 @@ def update_challenge(challenge_info, url, access_token):
         update_url = f"{url}/api/v1/challenges/{existing_challenge}"
         r = session.patch(update_url, json=data, headers=auth_headers)
         r.raise_for_status()
-
+'''
         # Get the flag ID associated with the existing challenge
         existing_flag_ids = get_flag_id_by_challenge_id(existing_challenge, session, url, auth_headers)
         if len(existing_flag_ids)>0:
