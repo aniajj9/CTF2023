@@ -54,7 +54,7 @@ def parse_arguments():
     if parsed.directories_to_include:
         # Split the input string into a list using both commas and spaces as separators
         parsed.directories_to_include = [item.strip() for item in re.split(r'[,\s]+', parsed.directories_to_include)]
-        
+
     return parsed
 
 # Make sure the info is correct
@@ -134,24 +134,29 @@ def get_challenge_id_by_name(challenges, challenge_name):
             return challenge["id"]
     return None
 
-def get_challenge_by_id(challenge_id, session, url, auth_headers):
-    # Make a GET request to retrieve details for the specified challenge
-    challenge_url = f"{url}/api/v1/challenges/{challenge_id}"
-    response = session.get(challenge_url, headers=auth_headers)
+    def get_challenge_by_id(challenge_id, session, url, auth_headers):
+        # Make a GET request to retrieve details for the specified challenge
+        challenge_url = f"{url}/api/v1/challenges/{challenge_id}"
 
-    # Check for errors
-    response.raise_for_status()
+        try:
+            response = session.get(challenge_url, headers=auth_headers)
+            response.raise_for_status()
+            data = response.json()
 
-    # Parse the response JSON
-    data = response.json()
+            # Check if the response indicates success
+            if data.get("success") and data.get("data"):
+                # Return the details of the challenge
+                return data["data"]
 
-    # Check if the response indicates success
-    if data.get("success") and data.get("data"):
-        # Return the details of the challenge
-        return data["data"]
+        except requests.exceptions.HTTPError as http_err:
+            print(f"HTTP error occurred: {http_err}")
+        except requests.exceptions.RequestException as req_err:
+            print(f"Request error occurred: {req_err}")
+        except json.decoder.JSONDecodeError as json_err:
+            print(f"JSON decoding error occurred: {json_err}")
 
-    # If no data is found, return None or raise an exception, depending on your needs
-    return None
+        # If an error occurs or the structure is not as expected, return None or raise an exception
+        return None
 
 
 def create_challenge(challenge, directory, url, access_token, scoring = None):
