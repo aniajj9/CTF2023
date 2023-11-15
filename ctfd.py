@@ -137,12 +137,9 @@ def get_challenge_id_by_name(challenges, challenge_name):
 def get_challenge_by_id(challenge_id, session, url, auth_headers):
     # Make a GET request to retrieve details for the specified challenge
     challenge_url = f"{url}/api/v1/challenges/{challenge_id}?view=admin"
-    challenge_url = f"{url}/api/v1/flags"
 
     response = session.get(challenge_url, headers=auth_headers)
     response.raise_for_status()
-    print(challenge_url)
-    print(response.text)
     data = response.json()
     # Check if the response indicates success
     if data.get("success") and data.get("data"):
@@ -332,8 +329,8 @@ def update_challenge(challenge_info, url, access_token):
     if existing_challenge:
         # Create auth headers
         auth_headers = {"Authorization": f"Token {access_token}"}
-        print(existing_challenge)
-        existing_challenge_details = get_challenge_by_id(existing_challenge, session, url, auth_headers)
+        #existing_challenge_details = get_challenge_by_id(existing_challenge, session, url, auth_headers)
+        existing_challenge_details = 0
 
         data = {
             "name": challenge_info["title"],
