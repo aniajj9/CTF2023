@@ -216,26 +216,6 @@ def delete_challenge_by_name(challenges, challenge_name):
     else:
         raise AttributeError(f"No challenge with name {challenge_name}")
 
-def get_flags_by_challenge_id(url, challenge_id, auth_headers):
-    # Make an API request to get flags by challenge ID
-    flags_api_url = f"{url}/api/v1/challenges/{challenge_id}/flags"
-    response = session.get(flags_api_url, headers=auth_headers)
-    response.raise_for_status()
-    return response.json()["data"]
-
-def get_tags_by_challenge_id(url, challenge_id, auth_headers):
-    # Make an API request to get tags by challenge ID
-    tags_api_url = f"{url}/api/v1/challenges/{challenge_id}/tags"
-    response = session.get(tags_api_url, headers=auth_headers)
-    response.raise_for_status()
-    return response.json()["data"]
-
-def get_files_by_challenge_id(url, challenge_id, auth_headers):
-    # Make an API request to get files by challenge ID
-    files_api_url = f"{url}/api/v1/challenges/{challenge_id}/files"
-    response = session.get(files_api_url, headers=auth_headers)
-    response.raise_for_status()
-    return response.json()["data"]
 
 
 def update_challenge(challenge_info, url, access_token):
@@ -271,6 +251,7 @@ def update_challenge(challenge_info, url, access_token):
 
         # Send a PATCH request to update the challenge
         update_url = f"{url}/api/v1/challenges/{existing_challenge}"
+        print(update_url)
         r = session.patch(update_url, json=data, headers=auth_headers)
         r.raise_for_status()
 
@@ -300,6 +281,7 @@ def update_challenge(challenge_info, url, access_token):
         # Update flags if provided
         if challenge_info.get("flag"):
             flag_data = {"content": challenge_info["flag"], "type": "static", "challenge_id": existing_challenge}
+            print(f"{url}/api/v1/challenges/{existing_challenge}/flags")
             r = session.patch(f"{url}/api/v1/challenges/{existing_challenge}/flags", json=flag_data, headers=auth_headers)
             r.raise_for_status()
 
@@ -329,8 +311,6 @@ def update_challenge(challenge_info, url, access_token):
             r.raise_for_status()
     else:
         print(f"No existing challenge found with the name '{challenge_info['title']}'.")
-
-
 
 
 
