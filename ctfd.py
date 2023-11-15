@@ -258,6 +258,7 @@ def get_tag_id_by_challenge_id(challenge_id, session, url, auth_headers):
     return None
 
 
+
 def get_files_by_challenge_id(challenge_id, session, url, auth_headers):
     # Make a GET request to retrieve files for the specified challenge
     files_url = f"{url}/api/v1/challenges/{challenge_id}/files"
@@ -286,6 +287,8 @@ def delete_file_by_id(file_id, session, url, auth_headers):
     response.raise_for_status()
 
     print(f"File with ID {file_id} deleted successfully.")
+
+
 
 def delete_files_by_challenge_id(challenge_id, session, url, auth_headers):
     # Get the list of files associated with the challenge
@@ -348,19 +351,29 @@ def update_challenge(challenge_info, url, access_token):
         else:
             print(f"No existing flag found for challenge '{challenge_info['title']}'.")
 
-        # Get the tag ID associated with the existing challenge
+        # Delete existing tags for the challenge
         existing_tag_id = get_tag_id_by_challenge_id(existing_challenge, session, url, auth_headers)
         if existing_tag_id is not None:
-            # The existing_tag_id can now be used in your PATCH request for updating the flag
-            tag_data = {"content": challenge_info["tags"], "type": "static", "challenge_id": existing_challenge}
+            # The existing_tag_id can now be used to delete the tags
             tag_url = f"{url}/api/v1/tags/{existing_tag_id}"
-            print(challenge_info['tags'])
-            # Update the flag with a PATCH request
-            r = session.patch(tag_url, json=tag_data, headers=auth_headers)
+            r = session.delete(tag_url, headers=auth_headers)
             r.raise_for_status()
-            print(f"Tag for challenge '{challenge_info['title']}' updated successfully.")
+            print(f"Tags for challenge '{challenge_info['title']}' deleted successfully.")
         else:
-            print(f"No existing tag found for challenge '{challenge_info['title']}'.")
+            print(f"No existing tags found for challenge '{challenge_info['title']}'.")
+        # Create new tags for the challenge
+        if challenge_info.get("tags"):
+            for tag in challenge_info["tags"]:
+                r = session.post(
+                    url + f"/api/v1/tags", json={"challenge_id": existing_challenge, "value": tag},
+                    headers=auth_headers
+                )
+                r.raise_for_status()
+
+            print(f"Tags for challenge '{challenge_info['title']}' created successfully.")
+
+
+
 
         # Update downloadable files if provided
         print("FILES ---")
