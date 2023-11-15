@@ -352,7 +352,7 @@ def update_challenge(challenge_info, url, access_token):
         existing_tag_id = get_tag_id_by_challenge_id(existing_challenge, session, url, auth_headers)
         if existing_tag_id is not None:
             # The existing_tag_id can now be used in your PATCH request for updating the flag
-            tag_data = {"content": challenge_info["tag"], "type": "static", "challenge_id": existing_challenge}
+            tag_data = {"content": challenge_info["tags"], "type": "static", "challenge_id": existing_challenge}
             tag_url = f"{url}/api/v1/tags/{existing_tag_id}"
             # Update the flag with a PATCH request
             r = session.patch(tag_url, json=tag_data, headers=auth_headers)
