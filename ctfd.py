@@ -27,9 +27,6 @@ def store_config():
     with open(SETTINGS_FILE, "w+") as f:
         config.write(f)
 
-'''
- Parse the command line arguments
-'''
 def parse_arguments():
     stored_url = config.get("integration", "url")
     stored_token = config.get("integration", "admin_token")
@@ -57,7 +54,7 @@ def parse_arguments():
 
     return parsed
 
-# Make sure the info is correct
+
 def validate_challenge_info(challenge):
     valid = True
     keys = ["title","description","flag"]
@@ -88,7 +85,6 @@ def validate_challenge_info(challenge):
                 valid = False
 
     return valid
-
 
 def get_local_challenges(directory):
     dirs = next(os.walk(directory))[1]
@@ -133,22 +129,6 @@ def get_challenge_id_by_name(challenges, challenge_name):
         if challenge["name"] == challenge_name:
             return challenge["id"]
     return None
-
-def get_challenge_by_id(challenge_id, session, url, auth_headers):
-    # Make a GET request to retrieve details for the specified challenge
-    challenge_url = f"{url}/api/v1/challenges/{challenge_id}?view=admin"
-
-    response = session.get(challenge_url, headers=auth_headers)
-    response.raise_for_status()
-    data = response.json()
-    # Check if the response indicates success
-    if data.get("success") and data.get("data"):
-        # Return the details of the challenge
-        return data["data"]
-
-    # If an error occurs or the structure is not as expected, return None or raise an exception
-    return None
-
 
 def create_challenge(challenge, directory, url, access_token, scoring = None):
     auth_headers = {"Authorization": f"Token {access_token}"}
@@ -329,18 +309,20 @@ def update_challenge(challenge_info, url, access_token):
     if existing_challenge:
         # Create auth headers
         auth_headers = {"Authorization": f"Token {access_token}"}
-        #existing_challenge_details = get_challenge_by_id(existing_challenge, session, url, auth_headers)
-        existing_challenge_details = 0
-        #get_flag_id_by_challenge_id(existing_challenge, session, url, auth_headers)
 
         data = {
             "name": challenge_info["title"],
             "category": challenge_info["category"],
-            "description": challenge_info["description"]
-        
+            "description": challenge_info["description"],
+            "type": challenge_info.get("type", "dynamic"),
+            "value": challenge_info.get("points", 0),
+            "state": "hidden",
+            "initial": 500,
+            "decay": 15,
+            "minimum": 100,
         }
 
-        '''if challenge_info.get("type") in ["dynamic", "standard"]:
+        if challenge_info.get("type") in ["dynamic", "standard"]:
             data["type"] = challenge_info["type"]
 
         if data["type"] == "standard":
@@ -355,7 +337,7 @@ def update_challenge(challenge_info, url, access_token):
         update_url = f"{url}/api/v1/challenges/{existing_challenge}"
         r = session.patch(update_url, json=data, headers=auth_headers)
         r.raise_for_status()
-'''
+
         # Get the flag ID associated with the existing challenge
         existing_flag_ids = get_flag_id_by_challenge_id(existing_challenge, session, url, auth_headers)
         if len(existing_flag_ids)>0:
