@@ -142,7 +142,7 @@ def get_challenge_by_id(challenge_id, session, url, auth_headers):
         response = session.get(challenge_url, headers=auth_headers)
         response.raise_for_status()
         print(challenge_url)
-        print(response)
+        print(response.content)
         data = response.content.json()
         # Check if the response indicates success
         if data.get("success") and data.get("data"):
