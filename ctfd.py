@@ -282,14 +282,14 @@ def update_challenge(challenge_info, url, access_token):
         if challenge_info.get("flag"):
             flag_data = {"content": challenge_info["flag"], "type": "static", "challenge_id": existing_challenge}
             print(f"{url}/api/v1/challenges/{existing_challenge}/flags")
-            r = session.patch(f"{url}/api/v1/challenges/{existing_challenge}/flags", json=flag_data, headers=auth_headers)
+            r = session.patch(f"{update_url}/flags", json=flag_data, headers=auth_headers)
             r.raise_for_status()
 
         # Update tags if provided
         if challenge_info.get("tags"):
             for tag in challenge_info["tags"]:
                 r = session.patch(
-                    f"{url}/api/v1/challenges/{existing_challenge}/tags", json={"challenge_id": existing_challenge, "value": tag},
+                    f"{update_url}/tags", json={"challenge_id": existing_challenge, "value": tag},
                     headers=auth_headers
                 )
                 r.raise_for_status()
@@ -307,7 +307,7 @@ def update_challenge(challenge_info, url, access_token):
                     raise Exception(f"File {file_path} was not found")
 
             file_data = {"challenge_id": existing_challenge, "type": "challenge"}
-            r = session.patch(f"{url}/api/v1/challenges/{existing_challenge}/files", files=files, data=file_data, headers=auth_headers)
+            r = session.patch(f"{update_url}/files", files=files, data=file_data, headers=auth_headers)
             r.raise_for_status()
     else:
         print(f"No existing challenge found with the name '{challenge_info['title']}'.")
