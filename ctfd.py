@@ -331,6 +331,7 @@ def update_challenge(challenge_info, url, access_token):
         auth_headers = {"Authorization": f"Token {access_token}"}
         #existing_challenge_details = get_challenge_by_id(existing_challenge, session, url, auth_headers)
         existing_challenge_details = 0
+        get_flag_id_by_challenge_id(existing_challenge, session, url, auth_headers)
 
         data = {
             "name": challenge_info["title"],
