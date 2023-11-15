@@ -439,6 +439,7 @@ if __name__ == "__main__":
 
     print("[+] Local challenges")
     challenges = get_local_challenges(settings.path)
+    challenges.sort(key=lambda x: x["title"]) # sort them alphabetically
     for chal in challenges:
         print(chal["title"])
 
