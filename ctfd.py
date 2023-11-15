@@ -255,6 +255,27 @@ def update_challenge(challenge_info, url, access_token):
 
         print(f"Challenge '{challenge_info['title']}' updated successfully.")
 
+        # Remove existing flags
+        existing_flags = get_flags_by_challenge_id(existing_challenge)
+        for flag_id in existing_flags:
+            flag_url = f"{url}/api/v1/flags/{flag_id}"
+            r = session.delete(flag_url, headers=auth_headers)
+            r.raise_for_status()
+
+        # Remove existing tags
+        existing_tags = get_tags_by_challenge_id(existing_challenge)
+        for tag_id in existing_tags:
+            tag_url = f"{url}/api/v1/tags/{tag_id}"
+            r = session.delete(tag_url, headers=auth_headers)
+            r.raise_for_status()
+
+        # Remove existing downloadable files
+        existing_files = get_files_by_challenge_id(existing_challenge)
+        for file_id in existing_files:
+            file_url = f"{url}/api/v1/files/{file_id}"
+            r = session.delete(file_url, headers=auth_headers)
+            r.raise_for_status()
+
         # Update flags if provided
         if challenge_info.get("flag"):
             flag_data = {"content": challenge_info["flag"], "type": "static", "challenge_id": existing_challenge}
@@ -287,6 +308,7 @@ def update_challenge(challenge_info, url, access_token):
             r.raise_for_status()
     else:
         print(f"No existing challenge found with the name '{challenge_info['title']}'.")
+
 
 
 
