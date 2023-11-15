@@ -130,21 +130,6 @@ def get_challenge_id_by_name(challenges, challenge_name):
             return challenge["id"]
     return None
 
-def get_challenge_by_id(challenge_id, session, url, auth_headers):
-    # Make a GET request to retrieve details for the specified challenge
-    challenge_url = f"{url}/api/v1/challenges/{challenge_id}?view=admin"
-
-    response = session.get(challenge_url, headers=auth_headers)
-    response.raise_for_status()
-    data = response.json()
-    # Check if the response indicates success
-    if data.get("success") and data.get("data"):
-        # Return the details of the challenge
-        return data["data"]
-
-    # If an error occurs or the structure is not as expected, return None or raise an exception
-    return None
-
 def create_challenge(challenge, directory, url, access_token, scoring = None):
     auth_headers = {"Authorization": f"Token {access_token}"}
 
@@ -154,10 +139,10 @@ def create_challenge(challenge, directory, url, access_token, scoring = None):
         "description": challenge["description"],
         "type": challenge.get("type", "dynamic"),
         "value": challenge.get("points", 0),
-        "state": challenge.get("state", "hidden"),
-        "initial": challenge.get("initial", 500),
-        "decay": challenge.get("decay", 15),
-        "minimum": challenge.get("minimum", 100),
+        "state": "hidden",
+        "initial": 500,
+        "decay": 15,
+        "minimum": 100,
     }
 
     if scoring in ["dymamic", "standard"]:
@@ -231,6 +216,104 @@ def delete_challenge_by_name(challenges, challenge_name):
     else:
         raise AttributeError(f"No challenge with name {challenge_name}")
 
+def get_flag_id_by_challenge_id(challenge_id, session, url, auth_headers):
+    # Make a GET request to retrieve flags for the specified challenge
+    flags_url = f"{url}/api/v1/challenges/{challenge_id}/flags"
+    response = session.get(flags_url, headers=auth_headers)
+
+    # Check for errors
+    response.raise_for_status()
+
+    # Parse the response JSON
+    data = response.json()
+    flags = []
+    # Check if the response indicates success
+    if data.get("success") and data.get("data"):
+        # Find the first flag entry and return its ID
+        for flag_entry in data["data"]:
+            flags.append(flag_entry.get("id"))
+
+    # If no flags are found, return None or raise an exception, depending on your needs
+    return flags
+
+
+def get_tag_id_by_challenge_id(challenge_id, session, url, auth_headers):
+    # Make a GET request to retrieve flags for the specified challenge
+    flags_url = f"{url}/api/v1/challenges/{challenge_id}/tags"
+    response = session.get(flags_url, headers=auth_headers)
+
+    # Check for errors
+    response.raise_for_status()
+
+    # Parse the response JSON
+    data = response.json()
+    tags = []
+    # Check if the response indicates success
+    if data.get("success") and data.get("data"):
+        # Find the first flag entry and return its ID
+        for tag_entry in data["data"]:
+            tags.append(tag_entry.get("id"))
+
+    # If no flags are found, return None or raise an exception, depending on your needs
+    return tags
+
+
+
+def get_files_by_challenge_id(challenge_id, session, url, auth_headers):
+    # Make a GET request to retrieve files for the specified challenge
+    files_url = f"{url}/api/v1/challenges/{challenge_id}/files"
+    response = session.get(files_url, headers=auth_headers)
+
+    # Check for errors
+    response.raise_for_status()
+
+    # Parse the response JSON
+    data = response.json()
+
+    # Check if the response indicates success
+    if data.get("success") and data.get("data"):
+        # Return the list of files
+        return data["data"]
+
+    # If no files are found, return an empty list or raise an exception, depending on your needs
+    return []
+
+def delete_file_by_id(file_id, session, url, auth_headers):
+    # Make a DELETE request to delete the specified file
+    file_url = f"{url}/api/v1/files/{file_id}"
+    response = session.delete(file_url, headers=auth_headers)
+
+    # Check for errors
+    response.raise_for_status()
+
+    print(f"File with ID {file_id} deleted successfully.")
+
+
+
+def delete_files_by_challenge_id(challenge_id, session, url, auth_headers):
+    # Get the list of files associated with the challenge
+    files = get_files_by_challenge_id(challenge_id, session, url, auth_headers)
+
+    # Delete each file
+    for file_info in files:
+        file_id = file_info.get("id")
+        if file_id:
+            delete_file_by_id(file_id, session, url, auth_headers)
+
+def get_challenge_by_id(challenge_id, session, url, auth_headers):
+    # Make a GET request to retrieve details for the specified challenge
+    challenge_url = f"{url}/api/v1/challenges/{challenge_id}?view=admin"
+
+    response = requests.get(challenge_url, headers=auth_headers, json=True)
+    response.raise_for_status()
+    data = response.json()
+    # Check if the response indicates success
+    if data.get("success") and data.get("data"):
+        # Return the details of the challenge
+        return data["data"]
+
+    # If an error occurs or the structure is not as expected, return None or raise an exception
+    return None
 
 def update_challenge(challenge_info, url, access_token):
     # Get the ID of the existing challenge with the same name
@@ -239,23 +322,100 @@ def update_challenge(challenge_info, url, access_token):
     if existing_challenge:
         # Create auth headers
         auth_headers = {"Authorization": f"Token {access_token}"}
+        existing_challenge_details = get_challenge_by_id(existing_challenge, session, url, auth_headers)
 
-        # Define the data to update the challenge (modify as needed)
         data = {
-            "description": challenge_info["description"],
+            "name": challenge_info["title"],
             "category": challenge_info["category"],
-            # Include other fields to update as needed
+            "description": challenge_info["description"],
+            "type": challenge_info.get("type", existing_challenge_details["type"]),
+            "value": challenge_info.get("points", existing_challenge_details["value"]),
+            "state": challenge_info.get("state", existing_challenge_details["state"]),
+            "initial": challenge_info.get("initial", existing_challenge_details["initial"]),
+            "decay": challenge_info.get("decay", existing_challenge_details["decay"]),
+            "minimum": challenge_info.get("minimum", existing_challenge_details["minimum"])
         }
+
+        if challenge_info.get("type") in ["dynamic", "standard"]:
+            data["type"] = challenge_info["type"]
+
+        if data["type"] == "standard":
+            del data["initial"], data["decay"], data["minimum"]
+        elif data["type"] == "dynamic":
+            del data["value"]
+
+        if challenge_info.get("connection_info"):
+            data["connection_info"] = challenge_info["connection_info"]
 
         # Send a PATCH request to update the challenge
         update_url = f"{url}/api/v1/challenges/{existing_challenge}"
         r = session.patch(update_url, json=data, headers=auth_headers)
         r.raise_for_status()
 
+        # Get the flag ID associated with the existing challenge
+        existing_flag_ids = get_flag_id_by_challenge_id(existing_challenge, session, url, auth_headers)
+        if len(existing_flag_ids)>0:
+            for existing_flag_id in existing_flag_ids:
+                # The existing_flag_id can now be used in your PATCH request for updating the flag
+                flag_data = {"content": challenge_info["flag"], "type": "static", "challenge_id": existing_challenge}
+                flag_url = f"{url}/api/v1/flags/{existing_flag_id}"
+                # Update the flag with a PATCH request
+                r = session.patch(flag_url, json=flag_data, headers=auth_headers)
+                r.raise_for_status()
+                print(f"Flag for challenge '{challenge_info['title']}' updated successfully.")
+        else:
+            print(f"No existing flag found for challenge '{challenge_info['title']}'.")
+
+        # Delete existing tags for the challenge
+        existing_tag_ids = get_tag_id_by_challenge_id(existing_challenge, session, url, auth_headers)
+        if len(existing_tag_ids) > 0:
+            for existing_tag_id in existing_tag_ids:
+                # The existing_tag_id can now be used to delete the tags
+                tag_url = f"{url}/api/v1/tags/{existing_tag_id}"
+                r = session.delete(tag_url, headers=auth_headers)
+                r.raise_for_status()
+                print(f"Tags for challenge '{challenge_info['title']}' deleted successfully.")
+        else:
+            print(f"No existing tags found for challenge '{challenge_info['title']}'.")
+        # Create new tags for the challenge
+        if challenge_info.get("tags"):
+            for tag in challenge_info["tags"]:
+                r = session.post(
+                    url + f"/api/v1/tags", json={"challenge_id": existing_challenge, "value": tag},
+                    headers=auth_headers
+                )
+                r.raise_for_status()
+
+            print(f"Tags for challenge '{challenge_info['title']}' created successfully.")
+
+
+
+
+        # Update downloadable files if provided
+        print("FILES ---")
+        print(challenge_info.get("downloadable_files"))
+        print(challenge_info.get("directory"))
+        if challenge_info.get("downloadable_files") and challenge_info.get("directory"):
+            # Delete existing files for the challenge
+            delete_files_by_challenge_id(existing_challenge, session, url, auth_headers)
+
+            # Upload new files for the challenge
+            files = []
+            for f in challenge_info["downloadable_files"]:
+                file_path = Path(challenge_info["directory"], f)
+                if file_path.exists():
+                    file_object = ("file", file_path.open(mode="rb"))
+                    files.append(file_object)
+                else:
+                    print(f"File {file_path} was not found", fg="red")
+                    raise Exception(f"File {file_path} was not found")
+
+            file_data = {"challenge_id": existing_challenge, "type": "challenge"}
+            r = session.post(f"{url}/api/v1/files", files=files, data=file_data, headers=auth_headers)
+            r.raise_for_status()
         print(f"Challenge '{challenge_info['title']}' updated successfully.")
     else:
         print(f"No existing challenge found with the name '{challenge_info['title']}'.")
-
 
 
 
