@@ -143,7 +143,7 @@ def get_challenge_by_id(challenge_id, session, url, auth_headers):
         response.raise_for_status()
         print(challenge_url)
         print(response)
-        data = response.json()
+        data = response.content.json()
         # Check if the response indicates success
         if data.get("success") and data.get("data"):
             # Return the details of the challenge
