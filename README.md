@@ -1,6 +1,6 @@
 # CTF 2023 Challenges
 
-This repository contains the challenges for Capture The Flag (CTF) 2023, and the workflows for their deployment.   
+This repository contains the challenges for Capture The Flag (CTF) 2023, and the workflows for their deployment. 
 
 ## Challenges
 
