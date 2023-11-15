@@ -337,12 +337,7 @@ def update_challenge(challenge_info, url, access_token):
             "name": challenge_info["title"],
             "category": challenge_info["category"],
             "description": challenge_info["description"]
-           ''' "type": challenge_info.get("type", existing_challenge_details["type"]),
-            "value": challenge_info.get("points", existing_challenge_details["value"]),
-            "state": challenge_info.get("state", existing_challenge_details["state"]),
-            "initial": challenge_info.get("initial", existing_challenge_details["initial"]),
-            "decay": challenge_info.get("decay", existing_challenge_details["decay"]),
-            "minimum": challenge_info.get("minimum", existing_challenge_details["minimum"]), '''
+        
         }
 
         if challenge_info.get("type") in ["dynamic", "standard"]:
