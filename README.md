@@ -9,7 +9,7 @@ The CTF 2023 challenges are categorized into directories that match their respec
 Each challenge is required to include a `ctfd.json` file, following the specifications provided in [ctfd-cli](https://github.com/eskildsen/ctfd-cli).
 
 ## Task Deployment
-       
+          
 Challenges fall into two categories:
 
 #### Tasks Requiring Web Access
