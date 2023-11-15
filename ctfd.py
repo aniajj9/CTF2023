@@ -136,7 +136,7 @@ def get_challenge_id_by_name(challenges, challenge_name):
 
 def get_challenge_by_id(challenge_id, session, url, auth_headers):
     # Make a GET request to retrieve details for the specified challenge
-    challenge_url = f"{url}/api/v1/challenges/{challenge_id}"
+    challenge_url = f"{url}/api/v1/challenges/{challenge_id}?view=admin"
 
     response = session.get(challenge_url, headers=auth_headers)
     response.raise_for_status()
