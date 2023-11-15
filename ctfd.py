@@ -327,7 +327,7 @@ def update_challenge(challenge_info, url, access_token):
         data = {
             "name": challenge_info["title"],
             "category": challenge_info["category"],
-            "description": challenge_info["description"]
+            "description": challenge_info["description"],
             "type": challenge_info.get("type", existing_challenge_details["type"]),
             "value": challenge_info.get("points", existing_challenge_details["value"]),
             "state": challenge_info.get("state", existing_challenge_details["state"]),
