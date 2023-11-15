@@ -273,7 +273,6 @@ def update_challenge(challenge_info, url, access_token):
             r.raise_for_status()
     else:
         print(f"No existing challenge found with the name '{challenge_info['title']}'.")
-Z
 
 
 
