@@ -300,7 +300,20 @@ def delete_files_by_challenge_id(challenge_id, session, url, auth_headers):
         if file_id:
             delete_file_by_id(file_id, session, url, auth_headers)
 
+def get_challenge_by_id(challenge_id, session, url, auth_headers):
+    # Make a GET request to retrieve details for the specified challenge
+    challenge_url = f"{url}/api/v1/challenges/{challenge_id}?view=admin"
 
+    response = session.get(challenge_url, headers=auth_headers)
+    response.raise_for_status()
+    data = response.json()
+    # Check if the response indicates success
+    if data.get("success") and data.get("data"):
+        # Return the details of the challenge
+        return data["data"]
+
+    # If an error occurs or the structure is not as expected, return None or raise an exception
+    return None
 
 def update_challenge(challenge_info, url, access_token):
     # Get the ID of the existing challenge with the same name
