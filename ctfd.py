@@ -216,7 +216,25 @@ def delete_challenge_by_name(challenges, challenge_name):
     else:
         raise AttributeError(f"No challenge with name {challenge_name}")
 
+def get_flag_id_by_challenge_id(challenge_id, session, url, auth_headers):
+    # Make a GET request to retrieve flags for the specified challenge
+    flags_url = f"{url}/api/v1/challenges/{challenge_id}/flags"
+    response = session.get(flags_url, headers=auth_headers)
 
+    # Check for errors
+    response.raise_for_status()
+
+    # Parse the response JSON
+    data = response.json()
+
+    # Check if the response indicates success
+    if data.get("success") and data.get("data"):
+        # Find the first flag entry and return its ID
+        for flag_entry in data["data"]:
+            return flag_entry.get("id")
+
+    # If no flags are found, return None or raise an exception, depending on your needs
+    return None
 
 def update_challenge(challenge_info, url, access_token):
     # Get the ID of the existing challenge with the same name
@@ -253,12 +271,27 @@ def update_challenge(challenge_info, url, access_token):
         update_url = f"{url}/api/v1/challenges/{existing_challenge}"
         r = session.patch(update_url, json=data, headers=auth_headers)
         r.raise_for_status()
+        
+        existing_challenge_id = existing_challenge
 
-        # Update flags if provided
-        if challenge_info.get("flag"):
-            flag_data = {"content": challenge_info["flag"], "type": "static", "challenge_id": existing_challenge}
-            r = session.patch(f"{url}/api/v1/flags/{existing_challenge}", json=flag_data, headers=auth_headers)
-            r.raise_for_status()
+        if existing_challenge_id is not None:
+            # Get the flag ID associated with the existing challenge
+            existing_flag_id = get_flag_id_by_challenge_id(existing_challenge_id, session, url, auth_headers)
+
+            if existing_flag_id is not None:
+                # The existing_flag_id can now be used in your PATCH request for updating the flag
+                flag_data = {"content": challenge_info["flag"], "type": "static", "challenge_id": existing_challenge_id}
+                flag_url = f"{url}/api/v1/flags/{existing_flag_id}"
+
+                # Update the flag with a PATCH request
+                r = session.patch(flag_url, json=flag_data, headers=auth_headers)
+                r.raise_for_status()
+
+                print(f"Flag for challenge '{challenge_info['title']}' updated successfully.")
+            else:
+                print(f"No existing flag found for challenge '{challenge_info['title']}'.")
+        else:
+            print(f"No existing challenge found with the name '{challenge_info['title']}'.")
 
         # Update tags if provided
         if challenge_info.get("tags"):
