@@ -4,5 +4,6 @@
     "description": "you already know the drill. It seems they added some <i>input validation</i>, but a hacker like you, should easily be able to circumvent.",
     "downloadable_files": ["revenge.zip"],
     "tags": ["SHELL"],
-    "points": 500
+    "points": 500,
+    "connection_info": "http://20.123.50.13:5005"
 }

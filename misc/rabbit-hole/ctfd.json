@@ -4,5 +4,6 @@
     "description": "Well, the flag is extremely easy to find. But do you dare jumping in?",
     "downloadable_files": [],
     "tags": [],
-    "score": 200
+    "score": 200,
+    "connection_info": "http://20.123.50.13:5003"
 }

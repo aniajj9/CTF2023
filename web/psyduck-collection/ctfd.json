@@ -7,5 +7,6 @@
     ],
     "points": 200,
     "unique_server_per_team": false,
-    "tags": []
+    "tags": [],
+    "connection_info": "http://20.123.50.13:5002"
 }

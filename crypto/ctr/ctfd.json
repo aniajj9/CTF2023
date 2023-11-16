@@ -8,5 +8,6 @@
     "points": 300,
     "tags": [
        "crypto"
-    ]
+    ],
+    "connection_info": "http://20.123.50.13:5013"
   }

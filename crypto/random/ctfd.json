@@ -7,5 +7,6 @@
   ],
   "tags": [
      "random"
-  ]
+  ],
+    "connection_info": "nc 20.123.50.13:1337"
 }

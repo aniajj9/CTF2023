@@ -4,5 +4,6 @@
     "description": "Eever wondered how it feels like, when you exploit a service and get a reverse shell back from it? Granting full control?\n\nWell, now's your lucky time! Just pop a reverse shell and you have the flag.\n\nYou need something to receive the connection, so if you need it, [here is a server](https://shell.wep.dk/), just for you. Credentials are `admin:banke-banke-på`. \n\n**Please note:** This is a shared server, so others might be accessing it as well!",
     "downloadable_files": ["reversed.zip"],
     "tags": ["SHELL"],
-    "points": 250
+    "points": 250,
+    "connection_info": "http://20.123.50.13:5004"
 }

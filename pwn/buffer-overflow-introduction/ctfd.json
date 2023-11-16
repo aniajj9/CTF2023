@@ -4,5 +4,6 @@
   "description": "Here is the introduction challenge for pwnables, where we look into buffer overflows. It provides you with a basic example of how the stack could look like - and how it can be abused.",
   "downloadable_files": [],
   "tags": [],
-  "points": 200
+  "points": 200,
+    "connection_info": "http://20.123.50.13:5008"
 }
