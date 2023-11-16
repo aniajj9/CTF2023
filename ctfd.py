@@ -1,16 +1,18 @@
-import requests
-import os
-import configparser
 import argparse
-from pathlib import Path
+import configparser
 import json
-from codecs import BOM_UTF8
+import os
 import re
+from codecs import BOM_UTF8
+from pathlib import Path
+
+import requests
 
 SETTINGS_FILE = os.path.join(os.path.expanduser('~'), ".ctfd_settings")
 
 config = configparser.ConfigParser()
 session = requests.Session()
+
 
 def lstrip_bom(val, bom=BOM_UTF8):
     if val.startswith(bom):
@@ -18,14 +20,17 @@ def lstrip_bom(val, bom=BOM_UTF8):
     else:
         return val
 
+
 def ensure_config_exists():
     if not os.path.exists(SETTINGS_FILE):
-        config["integration"] = {"url": "", "admin_token": "" }
+        config["integration"] = {"url": "", "admin_token": ""}
         store_config()
+
 
 def store_config():
     with open(SETTINGS_FILE, "w+") as f:
         config.write(f)
+
 
 def parse_arguments():
     stored_url = config.get("integration", "url")
@@ -33,11 +38,17 @@ def parse_arguments():
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--token", type=str, help="the access token for the API access", default=stored_token)
-    parser.add_argument("--url", type=str, help="url to the instance, e.g. https://demo.ctfd.io. Without trailing slash", default=stored_url)
-    parser.add_argument("--prompt-each", action="store_true", help="signal to promp and ask for challenge creation for each individual challenge")
-    parser.add_argument("--scoring", type=str, choices=["dynamic", "standard"], help="specify scoring mechanism hereby overwriting individual challenge files")
+    parser.add_argument("--url", type=str,
+                        help="url to the instance, e.g. https://demo.ctfd.io. Without trailing slash",
+                        default=stored_url)
+    parser.add_argument("--prompt-each", action="store_true",
+                        help="signal to promp and ask for challenge creation for each individual challenge")
+    parser.add_argument("--scoring", type=str, choices=["dynamic", "standard"],
+                        help="specify scoring mechanism hereby overwriting individual challenge files")
     parser.add_argument("path", type=str, help="directory to traverse for challenges")
-    parser.add_argument("--directories-to-include", type=str, help="directories of challenges (eg. misc/reversed/) that should be added/updated", default=False)
+    parser.add_argument("--directories-to-include", type=str,
+                        help="directories of challenges (eg. misc/reversed/) that should be added/updated",
+                        default=False)
 
     parsed = parser.parse_args()
 
@@ -55,9 +66,10 @@ def parse_arguments():
     return parsed
 
 
+# Check if challenge is defined in CTFD.json correctly
 def validate_challenge_info(challenge):
     valid = True
-    keys = ["title","description","flag"]
+    keys = ["title", "description", "flag"]
 
     for key in keys:
         value = challenge.get(key)
@@ -68,15 +80,13 @@ def validate_challenge_info(challenge):
             print(f"Invalid property '{key}', must be a string with some content")
             valid = False
 
-    # Optional
     keys_arrays = ['downloadable_files', 'tags']
     for key in keys_arrays:
         value = challenge.get(key)
         if value is not None and not isinstance(value, list):
             print(f"Invalid property '{key}', must be an array!")
             valid = False
-            
-    # File paths
+
     if challenge.get("downloadable_files"):
         for f in challenge["downloadable_files"]:
             file_path = Path(challenge["directory"], f)
@@ -86,8 +96,10 @@ def validate_challenge_info(challenge):
 
     return valid
 
+
+# Get challenges from given directory (the directory contains folders of categories, those folders contain challenges)
 def get_local_challenges(directory):
-    dirs = next(os.walk(directory))[1]
+    dirs = next(os.walk(directory))[1]  # Get 1st lvl directory name (= name of category: web, misc, pwn etc.)
     ignore = [".git"]
     challenges = []
 
@@ -95,21 +107,22 @@ def get_local_challenges(directory):
         if category in ignore:
             continue
 
-        if settings.directories_to_include: # If specific directories are specified
-            if category not in [element.split('/')[0] for element in settings.directories_to_include]: # Skip if category not in chosen
+        if settings.directories_to_include:  # If specific directories are specified
+            if category not in [element.split('/')[0] for element in
+                                settings.directories_to_include]:  # Skip if category not in chosen
                 continue
 
-        challenge_dirs = next(os.walk(Path(directory, category)))[1]
+        challenge_dirs = next(os.walk(Path(directory, category)))[1] # Get folders with challenges
 
         for dir in challenge_dirs:
 
             if settings.directories_to_include:  # If specific directories are specified
                 if dir not in [element.split('/')[-1] for element in
-                                    settings.directories_to_include]:  # Skip if category not in chosen
+                               settings.directories_to_include]:  # Skip if category not in chosen
                     continue
-            filename = Path(directory, category, dir, "ctfd.json")
+            filename = Path(directory, category, dir, "ctfd.json")  # Find the CTFD.json file
             if not filename.exists():
-                print(f"File "+ str(filename) + " does not exist. Ignoring for now!")
+                print(f"File " + str(filename) + " does not exist. Ignoring for now!")
                 continue
 
             with open(filename, "rb") as f:
@@ -120,9 +133,12 @@ def get_local_challenges(directory):
 
     return challenges
 
+
+# Get all deployed challenges
 def get_ctfd_challenges(url, access_token):
     auth_headers = {"Authorization": f"Token {access_token}"}
     return requests.get(url + "/api/v1/challenges?view=admin", json=True, headers=auth_headers).json()["data"]
+
 
 def get_challenge_id_by_name(challenges, challenge_name):
     for challenge in challenges:
@@ -130,7 +146,8 @@ def get_challenge_id_by_name(challenges, challenge_name):
             return challenge["id"]
     return None
 
-def create_challenge(challenge, directory, url, access_token, scoring = None):
+
+def create_challenge(challenge, directory, url, access_token, scoring=None):
     auth_headers = {"Authorization": f"Token {access_token}"}
 
     data = {
@@ -189,138 +206,106 @@ def create_challenge(challenge, directory, url, access_token, scoring = None):
                 raise Exception(f"File {file_path} was not found")
 
         data = {"challenge_id": challenge_id, "type": "challenge"}
-        
+
         r = session.post(url + f"/api/v1/files", files=files, data=data, headers=auth_headers)
         r.raise_for_status()
 
-
     # Set challenge state
-    #if challenge.get("state"):
-    #    data = {"state": "hidden"}
-    #    if challenge["state"] in ["hidden", "visible"]:
-    #        data["state"] = challenge["state"]
-    #
-    #    r = session.patch(f"/api/v1/challenges/{challenge_id}", json=data)
-    #    r.raise_for_status()
+    if challenge.get("state"):
+       data = {"state": "hidden"}
+       if challenge["state"] in ["hidden", "visible"]:
+           data["state"] = challenge["state"]
+       r = session.patch(f"/api/v1/challenges/{challenge_id}", json=data)
+       r.raise_for_status()
+
 
 def delete_challenge_by_id(challenge_id):
     auth_headers = {"Authorization": f"Token {settings.token}"}
     r = session.delete(settings.url + f"/api/v1/challenges/{challenge_id}", json={}, headers=auth_headers)
     r.raise_for_status()
 
+
 def delete_challenge_by_name(challenges, challenge_name):
     challenge_id = get_challenge_id_by_name(challenges, challenge_name)
-    print(challenge_id)
     if challenge_id is not None:
         delete_challenge_by_id(challenge_id)
     else:
         raise AttributeError(f"No challenge with name {challenge_name}")
 
+
 def get_flag_id_by_challenge_id(challenge_id, session, url, auth_headers):
-    # Make a GET request to retrieve flags for the specified challenge
     flags_url = f"{url}/api/v1/challenges/{challenge_id}/flags"
     response = session.get(flags_url, headers=auth_headers)
-
-    # Check for errors
     response.raise_for_status()
 
-    # Parse the response JSON
     data = response.json()
     flags = []
-    # Check if the response indicates success
     if data.get("success") and data.get("data"):
         # Find the first flag entry and return its ID
         for flag_entry in data["data"]:
             flags.append(flag_entry.get("id"))
 
-    # If no flags are found, return None or raise an exception, depending on your needs
     return flags
 
 
 def get_tag_id_by_challenge_id(challenge_id, session, url, auth_headers):
-    # Make a GET request to retrieve flags for the specified challenge
     flags_url = f"{url}/api/v1/challenges/{challenge_id}/tags"
     response = session.get(flags_url, headers=auth_headers)
 
-    # Check for errors
     response.raise_for_status()
 
-    # Parse the response JSON
     data = response.json()
     tags = []
-    # Check if the response indicates success
     if data.get("success") and data.get("data"):
-        # Find the first flag entry and return its ID
+
         for tag_entry in data["data"]:
             tags.append(tag_entry.get("id"))
 
-    # If no flags are found, return None or raise an exception, depending on your needs
     return tags
 
 
-
 def get_files_by_challenge_id(challenge_id, session, url, auth_headers):
-    # Make a GET request to retrieve files for the specified challenge
     files_url = f"{url}/api/v1/challenges/{challenge_id}/files"
     response = session.get(files_url, headers=auth_headers)
-
-    # Check for errors
     response.raise_for_status()
-
-    # Parse the response JSON
     data = response.json()
 
-    # Check if the response indicates success
     if data.get("success") and data.get("data"):
-        # Return the list of files
         return data["data"]
-
-    # If no files are found, return an empty list or raise an exception, depending on your needs
     return []
 
+
 def delete_file_by_id(file_id, session, url, auth_headers):
-    # Make a DELETE request to delete the specified file
     file_url = f"{url}/api/v1/files/{file_id}"
     response = session.delete(file_url, headers=auth_headers)
-
-    # Check for errors
     response.raise_for_status()
-
     print(f"File with ID {file_id} deleted successfully.")
 
 
-
 def delete_files_by_challenge_id(challenge_id, session, url, auth_headers):
-    # Get the list of files associated with the challenge
     files = get_files_by_challenge_id(challenge_id, session, url, auth_headers)
-
-    # Delete each file
     for file_info in files:
         file_id = file_info.get("id")
         if file_id:
             delete_file_by_id(file_id, session, url, auth_headers)
 
+
 def get_challenge_by_id(challenge_id, session, url, auth_headers):
-    # Make a GET request to retrieve details for the specified challenge
     challenge_url = f"{url}/api/v1/challenges/{challenge_id}?view=admin"
 
     response = requests.get(challenge_url, headers=auth_headers, json=True)
     response.raise_for_status()
     data = response.json()
-    # Check if the response indicates success
     if data.get("success") and data.get("data"):
-        # Return the details of the challenge
         return data["data"]
-
-    # If an error occurs or the structure is not as expected, return None or raise an exception
     return None
 
+
 def update_challenge(challenge_info, url, access_token):
-    # Get the ID of the existing challenge with the same name
+    # Get challenge that we are updating, and its info from the URL
     existing_challenge = get_challenge_id_by_name(existing_challenges, challenge_info["title"])
 
     if existing_challenge:
-        # Create auth headers
         auth_headers = {"Authorization": f"Token {access_token}"}
         existing_challenge_details = get_challenge_by_id(existing_challenge, session, url, auth_headers)
 
@@ -347,37 +332,35 @@ def update_challenge(challenge_info, url, access_token):
         if challenge_info.get("connection_info"):
             data["connection_info"] = challenge_info["connection_info"]
 
-        # Send a PATCH request to update the challenge
+        # Update challenge details
         update_url = f"{url}/api/v1/challenges/{existing_challenge}"
         r = session.patch(update_url, json=data, headers=auth_headers)
         r.raise_for_status()
 
-        # Get the flag ID associated with the existing challenge
+        # Remove all old flags and add new one
         existing_flag_ids = get_flag_id_by_challenge_id(existing_challenge, session, url, auth_headers)
-        if len(existing_flag_ids)>0:
+        if len(existing_flag_ids) > 0:
             for existing_flag_id in existing_flag_ids:
-                # The existing_flag_id can now be used in your PATCH request for updating the flag
                 flag_data = {"content": challenge_info["flag"], "type": "static", "challenge_id": existing_challenge}
                 flag_url = f"{url}/api/v1/flags/{existing_flag_id}"
-                # Update the flag with a PATCH request
                 r = session.patch(flag_url, json=flag_data, headers=auth_headers)
                 r.raise_for_status()
                 print(f"Flag for challenge '{challenge_info['title']}' updated successfully.")
         else:
             print(f"No existing flag found for challenge '{challenge_info['title']}'.")
 
-        # Delete existing tags for the challenge
+        # Delete existing tags and post new ones
         existing_tag_ids = get_tag_id_by_challenge_id(existing_challenge, session, url, auth_headers)
         if len(existing_tag_ids) > 0:
             for existing_tag_id in existing_tag_ids:
-                # The existing_tag_id can now be used to delete the tags
                 tag_url = f"{url}/api/v1/tags/{existing_tag_id}"
                 r = session.delete(tag_url, headers=auth_headers)
                 r.raise_for_status()
                 print(f"Tags for challenge '{challenge_info['title']}' deleted successfully.")
         else:
             print(f"No existing tags found for challenge '{challenge_info['title']}'.")
-        # Create new tags for the challenge
+
+        # Create new tags
         if challenge_info.get("tags"):
             for tag in challenge_info["tags"]:
                 r = session.post(
@@ -388,18 +371,11 @@ def update_challenge(challenge_info, url, access_token):
 
             print(f"Tags for challenge '{challenge_info['title']}' created successfully.")
 
-
-
-
         # Update downloadable files if provided
-        print("FILES ---")
-        print(challenge_info.get("downloadable_files"))
-        print(challenge_info.get("directory"))
         if challenge_info.get("downloadable_files") and challenge_info.get("directory"):
-            # Delete existing files for the challenge
+            # Delete existing files
             delete_files_by_challenge_id(existing_challenge, session, url, auth_headers)
-
-            # Upload new files for the challenge
+            # Upload new files
             files = []
             for f in challenge_info["downloadable_files"]:
                 file_path = Path(challenge_info["directory"], f)
@@ -416,7 +392,6 @@ def update_challenge(challenge_info, url, access_token):
         print(f"Challenge '{challenge_info['title']}' updated successfully.")
     else:
         print(f"No existing challenge found with the name '{challenge_info['title']}'.")
-
 
 
 if __name__ == "__main__":
@@ -439,7 +414,7 @@ if __name__ == "__main__":
 
     print("[+] Local challenges")
     challenges = get_local_challenges(settings.path)
-    challenges.sort(key=lambda x: x["title"]) # sort them alphabetically
+    challenges.sort(key=lambda x: x["title"])  # sort them alphabetically
     for chal in challenges:
         print(chal["title"])
 
@@ -457,8 +432,8 @@ if __name__ == "__main__":
             print("-", chal["title"])
 
     print(settings.directories_to_include)
-    #choice = input("Do you want to import the new challenges? (y/N) ").lower().strip()
-    #if choice == "y":
+    # choice = input("Do you want to import the new challenges? (y/N) ").lower().strip()
+    # if choice == "y":
     if True:
         print("[+] Creating challenges")
         for chal in challenges:
@@ -476,13 +451,3 @@ if __name__ == "__main__":
                 if input("Update challenge '{}'? (y/N) ".format(chal['title'])).lower() == "y":
                     update_challenge(chal, settings.url, settings.token)
                     print("-", chal["title"], "refreshed")
-
-        '''
-        # DELETE CHALLENGE
-        for existing_challenge_name in existing_challenge_names:
-            if existing_challenge_name not in [chal["title"] for chal in challenges]:
-                if not settings.prompt_each:
-                    delete_challenge_by_name(existing_challenges, existing_challenge_name)
-                    continue
-                if input("Remove challenge '{}'? (y/N) ".format(chal['title'])).lower() == "y":
-                    delete_challenge_by_name(existing_challenges, existing_challenge_name)'''
