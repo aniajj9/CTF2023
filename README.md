@@ -2,7 +2,7 @@
 
 This repository contains the challenges for Capture The Flag (CTF) 2023, and the workflows for their deployment. 
 
-## Challenges
+## Challenges  
 
 The CTF 2023 challenges are categorized into directories that match their respective challenge categories. For example, the `/web/coffee/` directory contains files for the "Coffee" challenge, which is classified as a Web challenge.
 
