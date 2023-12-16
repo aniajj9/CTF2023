@@ -4,4 +4,4 @@ services:
     build:
       context: .
     ports:
-      - "8000:3001"
+      - "0.0.0.0:5015:8000"
