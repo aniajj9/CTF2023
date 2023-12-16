@@ -1,7 +1,7 @@
 {
   "flag": "CTF{404_fl4g_n0t_fouNd}",
   "title": "A little help from the web developer",
-  "description": "Just between you and me: I have heard that a very special user is currently online",
+  "description": "Just between you and me: I have heard that a very special user is currently online ",
   "points": 500,
   "unique_server_per_team": false,
   "tags": [

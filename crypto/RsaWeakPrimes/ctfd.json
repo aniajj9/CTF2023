@@ -1,7 +1,7 @@
 {
   "flag": "CTF{sm4ll_pr1mes_mak3_h4ckers_hapPY}",
   "title": "Break the RSA",
-  "description": "Warriors of ciphertext, fighters of primes - arm yourselves for the uneven battle, as the unbothered opponent will not give up their private key",
+  "description": "Warriors of ciphertext, fighters of primes - arm yourselves for the uneven battle, as the unbothered opponent will not give up their private key ",
   "downloadable_files": [
      "RsaWeakPrimes.zip"
   ],
