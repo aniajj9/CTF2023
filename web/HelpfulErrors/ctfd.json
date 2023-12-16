@@ -6,6 +6,6 @@
   "unique_server_per_team": false,
   "tags": [
      "web"
-  ]
+  ],
   "connection_info": "http://20.123.50.13:5007"
 }
