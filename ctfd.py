@@ -383,7 +383,7 @@ def update_challenge(challenge_info, url, access_token):
                     file_object = ("file", file_path.open(mode="rb"))
                     files.append(file_object)
                 else:
-                    print(f"File {file_path} was not found", fg="red")
+                    print(f"File {file_path} was not found")
                     raise Exception(f"File {file_path} was not found")
 
             file_data = {"challenge_id": existing_challenge, "type": "challenge"}
