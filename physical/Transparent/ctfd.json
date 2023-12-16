@@ -1,0 +1,10 @@
+{
+  "flag": "ctf{}",
+  "title": "Transparent",
+  "description": "",
+  "points": 500,
+  "unique_server_per_team": false,
+  "tags": [
+     "physical"
+  ]
+}

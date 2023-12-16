@@ -1,0 +1,10 @@
+{
+  "flag": "CTF{4t_l3as7_it_i$_N0t_A_h3ad!}",
+  "title": "The box",
+  "description": "",
+  "points": 500,
+  "unique_server_per_team": false,
+  "tags": [
+     "physical"
+  ]
+}

@@ -1,0 +1,7 @@
+{
+    "input": {
+        "user": "admin1",
+        "access_level": 9001,
+        "path": "/admins"
+    }
+}

@@ -1,0 +1,13 @@
+version: "2"  
+services:
+  opa:
+    image: openpolicyagent/opa:0.53.0-static
+    command: ["run", "--server", "-b", "/tmp/bundles"]
+    volumes:
+        - ${PWD}/bundles:/tmp/bundles
+  ctf:
+    image: ctf
+    build: .
+    ports:
+      - "3000:3000"
+
