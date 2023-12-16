@@ -1,0 +1,13 @@
+{
+  "flag": "CTF{n0t_so_5ecr3t}",
+  "title": "Private access ONLY!",
+  "description": "I followed the encryption rules. And now my ciphertext is secure, right?",
+  "downloadable_files": [
+     "BasicRSA.zip"
+  ],
+  "points": 500,
+  "unique_server_per_team": false,
+  "tags": [
+     "crypto"
+  ]
+}

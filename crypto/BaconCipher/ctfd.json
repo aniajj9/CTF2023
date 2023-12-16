@@ -1,0 +1,13 @@
+{
+  "flag": "CTF{CRISPYCRYPTOGRAPHYCONQUEROR}",
+  "title": "AAABABAABBAABAB",
+  "description": "Astonishingly, amidst the wilderness, a serendipitous discovery was made— a ciphertext emerged, brimming with a mesmerizing array of 'a's and 'b's, captivating the curious minds with its intriguing allure",
+  "downloadable_files": [
+     "source.zip"
+  ],
+  "points": 500,
+  "unique_server_per_team": false,
+  "tags": [
+     "crypto"
+  ]
+}

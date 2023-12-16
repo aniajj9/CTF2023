@@ -1,0 +1,3 @@
+AES is a very secure way of communicating - Just don't leave the key lying aound at random on a keycard or anywhere else some one might find them...
+Ohh and here is your flag: 
+CTF{AES_Is_gr3at_Just_Keep_Y0ur_key$_Saf3er_Than_Your_Children}

@@ -1,0 +1,1 @@
+Sharing secrets publicly is risky, but hey, it earns you a flag! CTF{n0t_so_5ecr3t}

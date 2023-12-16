@@ -1,0 +1,13 @@
+{
+  "flag": "CTF{th1s_fl4g_w0uld_hAve_b33n_a_b3ttEr_p4ssw0rd}",
+  "title": "Short passwords can be secure too!",
+  "description": "You might have heard that a password needs to be long and complicated in order to be secure, but its not true! Uppercase letters and special characters don't add much security, because I know a little hack, that makes any password unbreakable!",
+  "downloadable_files": [
+     "BrutForceMFpass.zip"
+  ],
+  "points": 500,
+  "unique_server_per_team": false,
+  "tags": [
+     "misc"
+  ]
+}

@@ -1,0 +1,2 @@
+docker build -t helpfulerrors-image .
+docker run -d -p 8001:8000 --name helpfulerrors-container helpfulerrors-image

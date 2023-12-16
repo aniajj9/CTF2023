@@ -1,0 +1,1 @@
+When it comes to secrets, the Bacon cipher sizzles with mystery, making messages as tantalizing as crispy bacon strips. CTF{CRISPYCRYPTOGRAPHYCONQUEROR}

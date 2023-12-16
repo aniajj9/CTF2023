@@ -1,0 +1,10 @@
+{
+  "flag": "CTF{AES_Is_gr3at_Just_Keep_Y0ur_key$_Saf3er_Than_Your_Children}",
+  "title": "Where are my keys",
+  "description": "You will need to find the key somewhere in the real world, Neo.",
+  "points": 500,
+  "unique_server_per_team": false,
+  "tags": [
+     "misc"
+  ]
+}

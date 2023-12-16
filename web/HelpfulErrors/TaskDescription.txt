@@ -1,0 +1,9 @@
+The premise of this task is to show what can go wrong when users are exposed to too verbose errors.
+Ref: 2201000 Create a Improper Error Handling where the error just returns a valid token for the flag user.
+
+The code as of now is very simple (and also ugly :( )
+Can either be made nicer, resemble a real usable website, or left pretty much empty - which is also beneficial, because the task is then easier - no unnecessary distractions for the participants
+
+I checked it only locally as of now
+
+The walkthrough is in the code comments

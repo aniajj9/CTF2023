@@ -1,0 +1,13 @@
+{
+  "flag": "ctf{binary_is_as_easy_as_01_10_11!!}",
+  "title": "Once upon a time in Bankdonia",
+  "description": "Read and and you will understand, or not...",
+  "downloadable_files": [
+     "text.txt"
+  ],
+  "points": 500,
+  "unique_server_per_team": false,
+  "tags": [
+     "misc"
+  ]
+}
