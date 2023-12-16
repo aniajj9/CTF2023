@@ -3,7 +3,7 @@
   "title": "This thing never happens in tne real world!",
   "description": "There is code. There is text. Are they connected? Maybe. Will you get a flag? Maybe.",
   "downloadable_files": [
-     "BIOSPass.zip"
+     "challenge.zip"
   ],
   "points": 500,
   "unique_server_per_team": false,
