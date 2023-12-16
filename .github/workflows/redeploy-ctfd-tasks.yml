@@ -65,11 +65,13 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Run ctfd.py
-        run: |
-          filtered_files="${{ steps.filtered-files.outputs.filtered_files }}"
-          if [ -z "$filtered_files" ]; then
-            python ctfd.py "./" --token ${{ secrets.CTFD_TOKEN }} --url ${{ secrets.CTFD_URL }}
-          else
-            python ctfd.py "./" --directories-to-include "$filtered_files" --token ${{ secrets.CTFD_TOKEN }} --url ${{ secrets.CTFD_URL }}
-          fi
+        run: | 
+          python ctfd.py "./" --token ${{ secrets.CTFD_TOKEN }} --url ${{ secrets.CTFD_URL }}
+          
+        #filtered_files="${{ steps.filtered-files.outputs.filtered_files }}"
+        #if [ -z "$filtered_files" ]; then
+        #python ctfd.py "./" --token ${{ secrets.CTFD_TOKEN }} --url ${{ secrets.CTFD_URL }}
+        #else
+        #python ctfd.py "./" --directories-to-include "$filtered_files" --token ${{ secrets.CTFD_TOKEN }} --url ${{ secrets.CTFD_URL }}
+        #fi
 
