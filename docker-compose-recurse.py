@@ -3,12 +3,12 @@ import os
 import subprocess
 import argparse
 
-# Function to recursively search for docker-compose.yml files
 def find_docker_compose_files(directory):
     for root, dirs, files in os.walk(directory):
-        if 'docker-compose.yml' in files:
-            docker_compose_path = os.path.join(root, 'docker-compose.yml')
-            yield docker_compose_path
+        for filename in files:
+            if filename in ('docker-compose.yml', 'docker-compose.yaml'):
+                docker_compose_path = os.path.join(root, filename)
+                yield docker_compose_path
 
 # Function to run Docker Compose for a given file
 def run_docker_compose(file_path):
