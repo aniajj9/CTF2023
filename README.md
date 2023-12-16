@@ -20,7 +20,9 @@ These tasks can be hosted on a CTFd instance.
 
 These tasks are also hosted on a CTFd instance but do not require public web access.
 
-Web tasks are defined using `docker-compose.yml` configuration files and are deployed on an Azure Virtual Machine. This VM runs Docker containers, ensuring a controlled and isolated environment for these challenges.
+Web tasks are defined using `docker-compose.yml` configuration files and are deployed on an Azure Virtual Machine. This VM runs Docker containers, ensuring a controlled and isolated environment for these challenges. 
+
+** Make sure that the file defining docker containers is called docker-compose.yml - otherwise it will not be deployed on the VM!**
 
 The CTFd instance itself is hosted on Azure.
 
