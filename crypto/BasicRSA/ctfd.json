@@ -3,7 +3,7 @@
   "title": "Private access ONLY!",
   "description": "I followed the encryption rules. And now my ciphertext is secure, right? ",
   "downloadable_files": [
-     "BasicRSA.zip"
+     "challenge.zip"
   ],
   "points": 500,
   "unique_server_per_team": false,
