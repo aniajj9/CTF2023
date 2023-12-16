@@ -202,7 +202,7 @@ def create_challenge(challenge, directory, url, access_token, scoring=None):
                 file_object = ("file", file_path.open(mode="rb"))
                 files.append(file_object)
             else:
-                print(f"File {file_path} was not found", fg="red")
+                print(f"File {file_path} was not found")
                 raise Exception(f"File {file_path} was not found")
 
         data = {"challenge_id": challenge_id, "type": "challenge"}
