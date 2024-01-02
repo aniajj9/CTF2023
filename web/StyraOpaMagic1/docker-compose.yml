@@ -6,10 +6,10 @@ services:
     volumes:
         - ${PWD}/bundles:/tmp/bundles
     ports:
-      - "8181:8181"  # Expose OPA's port
+      - "0.0.0.0:8181:8181"  # Expose OPA's port
   ctf:
     image: ctf
     build: .
     ports:
-      - "3000:3000"
+      - "0.0.0.0:3000:3000"
 
