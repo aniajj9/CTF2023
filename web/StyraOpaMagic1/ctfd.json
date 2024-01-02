@@ -1,7 +1,7 @@
 {
-    "flag": "CTF{Styra}",
+    "flag": "CTF{OPAGangnamStyle}",
     "title": "Styra 1",
-    "description": "   1     ",
+    "description": "",
     "tags": ["Styra"],
-    "connection_info": "http://20.123.50.13:5116/task/0"
+    "connection_info": "https://styra-ctf.azurewebsites.net/task/0"
 }

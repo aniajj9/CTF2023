@@ -1,0 +1,7 @@
+{
+    "flag": "CTF{NOT_UNDEFINED_IS_TRUE}",
+    "title": "Styra 2",
+    "description": "",
+    "tags": ["Styra"],
+    "connection_info": "https://styra-ctf.azurewebsites.net/task/1"
+}

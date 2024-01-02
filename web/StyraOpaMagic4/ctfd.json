@@ -1,0 +1,7 @@
+{
+    "flag": "CTF{TYPECHECK_WHEN_USING_COMPARISON_OPERATORS}",
+    "title": "Styra 4",
+    "description": "",
+    "tags": ["Styra"],
+    "connection_info": "https://styra-ctf.azurewebsites.net/task/3"
+}

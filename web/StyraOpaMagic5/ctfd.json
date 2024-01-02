@@ -1,0 +1,7 @@
+{
+    "flag": "CTF{THAT_WAS_EASY}",
+    "title": "Styra 5",
+    "description": "",
+    "tags": ["Styra"],
+    "connection_info": "https://styra-ctf.azurewebsites.net/task/4"
+}

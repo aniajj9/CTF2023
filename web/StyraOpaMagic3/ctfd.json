@@ -1,0 +1,7 @@
+{
+    "flag": "CTF{CHECK_FOR_INPUT_EXISTENCE}",
+    "title": "Styra 3",
+    "description": "",
+    "tags": ["Styra"],
+    "connection_info": "https://styra-ctf.azurewebsites.net/task/2"
+}
