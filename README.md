@@ -43,7 +43,7 @@ This repository includes two GitHub workflows triggered by `PUSH` events to the 
 
 3. **redeploy-ctfd-tasks.yml**:
    - This workflow runs the `ctfd.py` script, which is a modified version of the original script created by [ctfd-cli](https://github.com/eskildsen/ctfd-cli).
-   - It triggers on any `PUSH` event to the `MAIN` branch.
+   - It is triggered on any `PUSH` event to the `MAIN` branch.
    - The workflow identifies the files that changed between the current push and the previous version of the repository.
    - It notes the directories in the format `/category/task/` (e.g., `/web/coffee/`) where differences are present.
    - If a task is not already part of the CTFd instance, the script adds it.
