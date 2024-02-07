@@ -1,0 +1,30 @@
+Ports where the tasks are running, and their status (successful Docker deployment - working, or not)
+/pwn
+	buffer overflow: 5008
+	doctor: 1338 (not working?)
+	
+
+/web
+	2-far-ahead: 5006
+	coffee: 5012 
+	psyduck: 5002
+	secure-web: NOT WORKING ON LOCAL :C
+	note-collection-1-5: 12001-12005 
+	calculator: 5007 
+	helpful-errors: 5115
+	styra: not working(?)
+
+/misc
+	rabbit-hole: 5003
+	reversed: 5004
+	revenge of reversed: 5005
+
+
+/crypto
+	ctr: 5013 
+	cbc 5014 
+	random: 1337 (nc 127.0.0.1 1337)
+
+
+
+
