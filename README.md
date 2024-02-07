@@ -44,11 +44,11 @@ This repository includes two GitHub workflows triggered by `PUSH` events to the 
 3. **redeploy-ctfd-tasks.yml**:
    - This workflow runs the `ctfd.py` script, which is a modified version of the original script created by [ctfd-cli](https://github.com/eskildsen/ctfd-cli).
    - It is triggered on any `PUSH` event to the `MAIN` branch.
-   - The workflow identifies the files that changed between the current push and the previous version of the repository.
-   - It notes the directories in the format `/category/task/` (e.g., `/web/coffee/`) where differences are present.
-   - If a task is not already part of the CTFd instance, the script adds it.
+   - The workflow identifies the files that changed between the current push and the latest state of the CTFd platform.
+   - If a task is not already part of the CTFd instance, the script adds it. It is has been updated, the script updates it.
+   - It does **not** remove challenges that are present on the CTFd platform, but not in this repo.
 
-## Scripts 
+## Helper scripts used in workflows
 ### `docker-compose-recurse.py`
 
 Python script that finds all `docker-compose.yml` files in a directory and builds them using the "docker-compose up -d --build" command.
@@ -67,7 +67,7 @@ If challenge is missing, it adds it.
 
 If challenge is present, it updates it.
 
-It also includes a function (commented) to remove a challenge from CTFd instance.
+It also includes a function (commented out) to remove a challenge from CTFd instance.
 
 **Parameters:**
 
