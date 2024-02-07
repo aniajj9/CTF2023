@@ -37,8 +37,8 @@ This repository includes two GitHub workflows triggered by `PUSH` events to the 
    - This workflow is activated by any `PUSH` to the `MAIN` branch, ensuring that all containers on the VM are redeployed with each push.
   
    Assumptions:
-   a. There are no conflicts while performing `git pull` on the virtual machine
-   b. If there are new tasks added, or the ports for already existing ones change, the ports are open on the networking section of Azure VM in Azure (manually add them)
+   - There are no conflicts while performing `git pull` on the virtual machine
+   - If there are new tasks added, or the ports for already existing ones change, the ports are open on the networking section of Azure VM in Azure (manually add them)
    
 
 3. **redeploy-ctfd-tasks.yml**:
